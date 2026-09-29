@@ -10,16 +10,16 @@ const RECENT = 3;
 const posts = (await getPosts()).slice(0, RECENT);
 ---
 
-<BaseLayout title={pageTitle('페이지를 찾을 수 없습니다')} noindex>
+<BaseLayout title={pageTitle('Page not found')} noindex>
   <SiteFrame>
     <div class="intro">
       <h1>404</h1>
       <p>찾으시는 페이지가 없습니다. 주소가 바뀌었을 수 있어요.</p>
-      <p><a href="/">홈으로</a></p>
+      <p><a href="/">Go home</a></p>
     </div>
     {
       posts.length > 0 && (
-        <Section label="최근 글" content="list">
+        <Section label="Writing" content="list">
           <EntryList entries={posts.map((p) => ({ title: p.data.title, description: p.data.description, href: postPath(p) }))} />
         </Section>
       )

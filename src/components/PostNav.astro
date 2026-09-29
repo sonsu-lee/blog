@@ -14,7 +14,7 @@ const { older, newer } = Astro.props;
     <nav>
       {older ? (
         <a href={postPath(older)} rel="prev">
-          <span class="label">이전 글</span>
+          <span class="label">Previous</span>
           <span class="title">{older.data.title}</span>
         </a>
       ) : (
@@ -22,7 +22,7 @@ const { older, newer } = Astro.props;
       )}
       {newer && (
         <a href={postPath(newer)} rel="next" class="newer">
-          <span class="label">다음 글</span>
+          <span class="label">Next</span>
           <span class="title">{newer.data.title}</span>
         </a>
       )}

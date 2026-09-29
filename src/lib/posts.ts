@@ -31,7 +31,8 @@ export function groupByYear(posts: Post[]): Array<[number, Post[]]> {
   return [...groups];
 }
 
-const dateFormat = new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+/** "September 29, 2026": short UI text is in English; sentences stay in Korean. */
+const dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
 export function formatDate(date: Date): string {
   return dateFormat.format(date);

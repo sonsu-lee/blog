@@ -13,19 +13,19 @@ const posts = await getPosts();
 ---
 
 <SiteLayout title={pageTitle()} description={summary}>
-  <Section label="지금">
+  <Section label="Today">
     <p>{summary}</p>
     <p>이 블로그에는 만들면서 배운 것들을 기록합니다.</p>
   </Section>
 
   {
     posts.length > 0 && (
-      <Section label="글" content="list">
+      <Section label="Writing" content="list">
         <EntryList
           entries={posts.slice(0, LATEST).map((p) => ({ title: p.data.title, description: p.data.description, href: postPath(p) }))}
         />
         <p class="all">
-          <a href="/posts/">모든 글</a> →
+          <a href="/posts/">All writing</a> →
         </p>
       </Section>
     )
@@ -33,18 +33,18 @@ const posts = await getPosts();
 
   {
     projects.length > 0 && (
-      <Section label="프로젝트" content="list">
+      <Section label="Projects" content="list">
         <EntryList entries={projects.map((p) => ({ title: p.name, description: p.description, href: p.href, external: true }))} />
       </Section>
     )
   }
 
-  <Section label="구독">
+  <Section label="Subscribe">
     <p>새 글은 <a href="/rss.xml">RSS</a>로 받아볼 수 있습니다.</p>
   </Section>
 
-  <Section label="더 보기">
-    <p>저에 대한 이야기는 <a href="/about/">소개</a>에 있습니다.</p>
+  <Section label="More">
+    <p>저에 대한 이야기는 <a href="/about/">About</a>에 있습니다.</p>
     <ProfileLinks />
   </Section>
 </SiteLayout>

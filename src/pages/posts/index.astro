@@ -6,12 +6,12 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
 import { getPosts, groupByYear, postPath } from '../../lib/posts';
 
 const posts = await getPosts();
-const summary = posts.length > 0 ? `쓴 글 ${posts.length}편.` : '아직 쓴 글이 없습니다.';
+const summary = posts.length === 0 ? 'Nothing here yet.' : `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}.`;
 ---
 
-<SiteLayout title={pageTitle('글')} description={summary}>
+<SiteLayout title={pageTitle('Writing')} description={summary}>
   <div class="intro">
-    <h1>글</h1>
+    <h1>Writing</h1>
     <p>{summary}</p>
   </div>
 
