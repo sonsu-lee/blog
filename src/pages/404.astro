@@ -1,5 +1,6 @@
 ---
 import EntryList from '../components/EntryList.astro';
+import { pageTitle } from '../data/profile';
 import Section from '../components/Section.astro';
 import SiteFrame from '../components/SiteFrame.astro';
 import { defaultLocale, locales } from '../i18n/config';
@@ -20,7 +21,7 @@ const variants = await Promise.all(
     posts: (await getPosts(locale)).slice(0, RECENT),
   })),
 );
-const titles = Object.fromEntries(variants.map(({ locale, t }) => [locale, `${t('notFound.title')} — Sonsu Lee`]));
+const titles = Object.fromEntries(variants.map(({ locale, t }) => [locale, pageTitle(t('notFound.title'))]));
 ---
 
 <BaseLayout locale={defaultLocale} title={titles[defaultLocale]} noindex>

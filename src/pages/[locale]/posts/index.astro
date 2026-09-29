@@ -1,6 +1,7 @@
 ---
 import EntryList from '../../../components/EntryList.astro';
 import Section from '../../../components/Section.astro';
+import { pageTitle } from '../../../data/profile';
 import type { Locale } from '../../../i18n/config';
 import { useTranslations } from '../../../i18n/ui';
 import { alternatesFor, localeStaticPaths } from '../../../i18n/utils';
@@ -17,7 +18,7 @@ const posts = await getPosts(locale);
 const summary = t(posts.length === 1 ? 'posts.summary.one' : 'posts.summary.other', { count: posts.length });
 ---
 
-<SiteLayout locale={locale} title={`${t('posts.title')} — Sonsu Lee`} description={summary} alternates={alternatesFor('posts')}>
+<SiteLayout locale={locale} title={pageTitle(t('posts.title'))} description={summary} alternates={alternatesFor('posts')}>
   <div class="intro">
     <h1>{t('posts.title')}</h1>
     <p>{posts.length > 0 ? summary : t('posts.empty')}</p>

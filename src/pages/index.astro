@@ -1,14 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { pageTitle } from '../data/profile';
 import { defaultLocale, localeNames, locales } from '../i18n/config';
 import { alternatesFor } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 // The site root has no content of its own. It sends visitors to the locale their
 // browser prefers; without JavaScript it shows the three choices instead.
 const alternates = alternatesFor();
 ---
 
-<BaseLayout locale={defaultLocale} title="Sonsu Lee" alternates={alternates}>
+<BaseLayout locale={defaultLocale} title={pageTitle()} alternates={alternates}>
   <script is:inline slot="head" define:vars={{ locales, fallback: defaultLocale }}>
     const preferred = (navigator.languages || [navigator.language]).map((l) => l.slice(0, 2).toLowerCase());
     location.replace('/' + (preferred.find((l) => locales.includes(l)) || fallback) + '/');

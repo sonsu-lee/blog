@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
+import { pageTitle } from '../../data/profile';
 import { intlLocales, type Locale } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 import { localePath, localeStaticPaths } from '../../i18n/utils';
@@ -16,7 +17,7 @@ export async function GET(context: APIContext) {
   const posts = await getPosts(locale);
 
   return rss({
-    title: `Sonsu Lee — ${t('posts.title')}`,
+    title: pageTitle(t('posts.title')),
     description: t('home.now.body'),
     site: new URL(localePath(locale), context.site).href,
     items: posts.map((post) => ({

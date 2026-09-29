@@ -8,6 +8,7 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
+import { name } from '../data/profile';
 import { intlLocales, locales, type Locale } from '../i18n/config';
 import { localeFile } from '../i18n/utils';
 import { OG_HEIGHT, OG_WIDTH, ogImagePath } from '../lib/og';
@@ -46,10 +47,10 @@ const canonical = absolute(Astro.url.pathname);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     {Object.entries(alternates).map(([l, href]) => <link rel="alternate" hreflang={l} href={absolute(href)} />)}
-    <link rel="alternate" type="application/rss+xml" title={`Sonsu Lee (${locale})`} href={absolute(localeFile(locale, 'rss.xml'))} />
+    <link rel="alternate" type="application/rss+xml" title={`${name} (${locale})`} href={absolute(localeFile(locale, 'rss.xml'))} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
-    <meta property="og:site_name" content="Sonsu Lee" />
+    <meta property="og:site_name" content={name} />
     <meta property="og:type" content={published ? 'article' : 'website'} />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}

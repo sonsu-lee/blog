@@ -1,4 +1,5 @@
 ---
+import { name } from '../data/profile';
 import type { Locale } from '../i18n/config';
 import { useTranslations } from '../i18n/ui';
 import { localePath } from '../i18n/utils';
@@ -15,7 +16,7 @@ const t = useTranslations(locale);
 
 <header>
   <p class="identity">
-    <a href={localePath(locale)}>Sonsu Lee</a>
+    <a href={localePath(locale)}>{name}</a>
     <span>{t('site.role')}</span>
   </p>
   <LangSwitcher locale={locale} alternates={alternates} />

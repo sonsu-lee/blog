@@ -3,6 +3,7 @@ import EntryList from '../../components/EntryList.astro';
 import LinkedText from '../../components/LinkedText.astro';
 import ProfileLinks from '../../components/ProfileLinks.astro';
 import Section from '../../components/Section.astro';
+import { pageTitle } from '../../data/profile';
 import { projects } from '../../data/projects';
 import type { Locale } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
@@ -21,7 +22,7 @@ const t = useTranslations(locale);
 const posts = await getPosts(locale);
 ---
 
-<SiteLayout locale={locale} title="Sonsu Lee" description={t('home.now.body')} alternates={alternatesFor()}>
+<SiteLayout locale={locale} title={pageTitle()} description={t('home.now.body')} alternates={alternatesFor()}>
   <Section label={t('home.now')}>
     <p>{t('home.now.body')}</p>
     <p>{t('home.now.blog')}</p>

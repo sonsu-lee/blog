@@ -1,5 +1,13 @@
 import type { Locale } from '../i18n/config';
 
+/** The name shown in the header, page titles, feeds, and share images. */
+export const name = 'Sungsu Lee';
+
+/** "<page> — Sungsu Lee", or just the name for the home page. */
+export function pageTitle(page?: string): string {
+  return page ? `${page} — ${name}` : name;
+}
+
 export interface ProfileLink {
   label: string | Record<Locale, string>;
   href: string;
