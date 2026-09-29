@@ -1,17 +1,57 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+// Temporary type specimen for checking tokens, fonts, and dark mode. Replaced by the locale routes.
+// Rendered as an English page so every font loads; each section sets its own lang.
+const samples = [
+  {
+    lang: 'ko',
+    title: '누르는 느낌 만들기',
+    body: '타이포그래피는 제대로 작동할 때 거의 보이지 않습니다. 편안한 페이지와 피곤한 페이지의 차이는 대개 몇 픽셀의 행간, 조금 더 좁은 줄 길이, 그리고 <em>서로 어울리는 글꼴</em>에서 나옵니다. <code>scale(0.97)</code> 하나면 <a href="#">충분합니다</a>.',
+  },
+  {
+    lang: 'ja',
+    title: '押した感触をつくる',
+    body: 'タイポグラフィは、うまく機能しているときほど目に見えません。読みやすいページと疲れるページの違いは、多くの場合、数ピクセルの行間、少し狭い行長、そして<em>調和する書体</em>にあります。<code>scale(0.97)</code> をひとつ加えるだけで<a href="#">十分です</a>。',
+  },
+  {
+    lang: 'en',
+    title: 'Making presses feel right',
+    body: 'Typography is mostly invisible when it works. The difference between a comfortable page and a tiring one is often a few pixels of line height, a slightly narrower measure, and <em>fonts that agree with each other</em>. A <code>scale(0.97)</code> is <a href="#">all you need</a>.',
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout locale="en" title="Sonsu Lee">
+  <main>
+    {
+      samples.map((s) => (
+        <section lang={s.lang}>
+          <h1>{s.title}</h1>
+          <p set:html={s.body} />
+        </section>
+      ))
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    display: grid;
+    gap: var(--section-gap);
+    max-width: var(--layout-column);
+    margin: 0 auto;
+    padding: var(--page-pad-top) var(--layout-gutter) var(--page-pad-bottom);
+  }
+
+  section {
+    display: grid;
+    gap: var(--space-4);
+    font-size: var(--size-body);
+    line-height: var(--leading-body);
+  }
+
+  p {
+    color: var(--color-text-prose);
+  }
+</style>

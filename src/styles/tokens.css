@@ -1,0 +1,222 @@
+/*
+ * Design tokens. Mirrors the variables in the Figma file (Blog — Design):
+ * Primitives → Color (Light/Dark), Space, Motion, and the effect styles.
+ * Dark mode follows the system setting; there is no toggle.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Primitives: Radix Sand, the same warm gray as emilkowal.ski */
+  --sand-1: #fdfdfc;
+  --sand-2: #f9f9f8;
+  --sand-3: #f1f0ef;
+  --sand-4: #e9e8e6;
+  --sand-5: #e2e1de;
+  --sand-6: #dad9d6;
+  --sand-7: #cfceca;
+  --sand-8: #bcbbb5;
+  --sand-9: #8d8d86;
+  --sand-10: #82827c;
+  --sand-11: #63635e;
+  --sand-12: #21201c;
+
+  /* Color: backgrounds */
+  --color-bg-default: var(--sand-1);
+  --color-bg-subtle: var(--sand-2);
+  --color-bg-hover: var(--sand-3);
+  --color-bg-active: var(--sand-4);
+  --color-bg-card: #ffffff;
+  --color-bg-row-hover: #f5f4f4;
+  --color-bg-selection: var(--sand-5);
+
+  /* Color: lines. Prefer --shadow-border (a translucent ring) over solid borders. */
+  --color-border-subtle: var(--sand-5);
+  --color-border-default: var(--sand-6);
+  --color-border-strong: var(--sand-7);
+  --color-border-soft: var(--sand-4);
+  --color-border-divider: var(--sand-3);
+  --color-border-alpha: rgb(0 0 0 / 0.08);
+
+  /* Color: text */
+  --color-text-default: var(--sand-12);
+  --color-text-prose: rgb(33 32 28 / 0.9);
+  --color-text-muted: var(--sand-11);
+  --color-text-caption: var(--sand-10);
+  --color-text-subtle: var(--sand-9);
+  --color-link-underline: var(--sand-8);
+  --color-link-underline-hover: var(--sand-9);
+
+  /* Color: focus */
+  --color-focus-ring: var(--sand-11);
+  --color-focus-within: rgb(0 0 0 / 0.2);
+
+  /* Code: Shiki github-light, as CSS variables so the theme switches without re-highlighting */
+  --shiki-token-fg: #24292e;
+  --shiki-token-keyword: #d73a49;
+  --shiki-token-constant: #005cc5;
+  --shiki-token-function: #6f42c1;
+  --shiki-token-variable: #e36209;
+  --shiki-token-string: #032f62;
+  --shiki-token-comment: #6a737d;
+  --shiki-token-tag: #22863a;
+
+  /* Shadows and rings */
+  --shadow-border: 0 0 0 1px var(--color-border-alpha);
+  --shadow-small: var(--shadow-border), 0 2px 2px rgb(0 0 0 / 0.04);
+  --shadow-medium: var(--shadow-small), 0 8px 8px -8px rgb(0 0 0 / 0.04);
+  --shadow-inset-border: inset 0 0 0 1px var(--color-border-alpha);
+  --focus-ring: 0 0 0 2px var(--color-bg-default), 0 0 0 4px var(--color-focus-ring);
+  --focus-input: 0 0 0 1px var(--color-border-soft), 0 0 0 3px var(--color-border-divider);
+  --focus-within: 0 0 0 2px var(--color-focus-within), var(--shadow-small);
+
+  /* Space (Tailwind naming: space-4 = 16px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  --radius-xs: 5px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Layout: a 692px column with 24px gutters leaves a 644px measure */
+  --layout-column: 692px;
+  --layout-content: 644px;
+  --layout-gutter: 24px;
+
+  /* Rhythm */
+  --page-pad-top: 116px;
+  --page-pad-bottom: 128px;
+  --section-gap: 128px;
+  --list-gap: 16px;
+  --list-label-gap: 16px;
+  --prose-paragraph: 26px;
+  --prose-h2-top: 56px;
+  --prose-h2-bottom: 20px;
+  --prose-block: 32px;
+  --prose-caption: 15px;
+  --prose-footnotes-top: 80px;
+  --prose-nav-top: 128px;
+
+  /* Motion. Frequent interactions get little or no motion; UI stays at or under 200ms. */
+  --duration-instant: 0ms;
+  --duration-fast: 100ms;
+  --duration-base: 150ms;
+  --duration-press: 160ms;
+  --duration-slow: 200ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Families. Inter, JetBrains Mono and Source Serif come from the Fonts API as --font-* variables. */
+  --font-pretendard: "Pretendard Variable";
+  --font-pretendard-jp: "Pretendard JP Variable";
+  --font-mono: var(--font-jetbrains-mono, ui-monospace), ui-monospace, monospace;
+}
+
+@media (max-width: 639px) {
+  :root {
+    --page-pad-top: 48px;
+    --page-pad-bottom: 64px;
+    --section-gap: 64px;
+    --list-gap: 28px;
+    --list-label-gap: 20px;
+    --prose-h2-top: 48px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sand-1: #111110;
+    --sand-2: #191918;
+    --sand-3: #222221;
+    --sand-4: #2a2a28;
+    --sand-5: #31312e;
+    --sand-6: #3b3a37;
+    --sand-7: #494844;
+    --sand-8: #62605b;
+    --sand-9: #6f6d66;
+    --sand-10: #7c7b74;
+    --sand-11: #b5b3ad;
+    --sand-12: #eeeeec;
+
+    --color-bg-card: var(--sand-2);
+    --color-bg-row-hover: var(--sand-3);
+    --color-border-divider: var(--sand-4);
+    --color-border-alpha: rgb(255 255 255 / 0.08);
+    --color-text-prose: rgb(238 238 236 / 0.9);
+    --color-focus-within: rgb(255 255 255 / 0.2);
+
+    --shiki-token-fg: #e1e4e8;
+    --shiki-token-keyword: #f97583;
+    --shiki-token-constant: #79b8ff;
+    --shiki-token-function: #b392f0;
+    --shiki-token-variable: #ffab70;
+    --shiki-token-string: #9ecbff;
+    --shiki-token-comment: #6a737d;
+    --shiki-token-tag: #85e89d;
+  }
+}
+
+/*
+ * Type per language. One size per locale; hierarchy comes from weight and color.
+ * Korean runs 1px larger because Hangul reads small next to Latin at the same size.
+ */
+:lang(en) {
+  --font-body: var(--font-inter, var(--font-pretendard)), system-ui, sans-serif;
+  --size-body: 16px;
+  --leading-body: 1.65;
+  --leading-tight: 1.5;
+  --size-small: 14px;
+  --size-caption: 12px;
+  --leading-caption: 1.333;
+  --size-footnote: 14px;
+  --leading-footnote: 1.64;
+  --size-quote: 30px;
+  --leading-quote: 1.33;
+}
+
+:lang(ko) {
+  --font-body: var(--font-pretendard), "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --size-body: 17px;
+  --leading-body: 1.75;
+  --leading-tight: 1.5;
+  --size-small: 15px;
+  --size-caption: 13px;
+  --leading-caption: 1.5;
+  --size-footnote: 15px;
+  --leading-footnote: 1.65;
+  --size-quote: 26px;
+  --leading-quote: 1.45;
+}
+
+:lang(ja) {
+  --font-body: var(--font-pretendard-jp), var(--font-pretendard), "Hiragino Sans", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
+  --size-body: 16px;
+  --leading-body: 1.85;
+  --leading-tight: 1.6;
+  --size-small: 14px;
+  --size-caption: 12px;
+  --leading-caption: 1.66;
+  --size-footnote: 14px;
+  --leading-footnote: 1.75;
+  --size-quote: 24px;
+  --leading-quote: 1.5;
+}
+
+@media (max-width: 639px) {
+  :lang(en) { --size-quote: 24px; }
+  :lang(ko) { --size-quote: 21px; }
+  :lang(ja) { --size-quote: 20px; }
+}

@@ -1,0 +1,43 @@
+---
+import { Font } from 'astro:assets';
+// Pretendard ships one @font-face per unicode-range chunk (92 for Korean, 119 for Japanese).
+// Importing its own stylesheet bundles them into a cached external CSS file; the Fonts API
+// would inline all of them into every page. Browsers download only the chunks a page uses,
+// which is why both load everywhere: the language switcher shows 한국어 and 日本語.
+import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  locale: 'ko' | 'ja' | 'en';
+  title: string;
+  description?: string;
+}
+
+const { locale, title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fdfdfc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    {/* Inter only on English pages; elsewhere Pretendard sets the Latin. */}
+    {locale === 'en' && <Font cssVariable="--font-inter" preload={[{ subset: 'latin' }]} />}
+    <Font cssVariable="--font-jetbrains-mono" />
+    {locale === 'en' && <Font cssVariable="--font-source-serif" />}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
