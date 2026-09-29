@@ -54,7 +54,10 @@ export const ui = {
 
 export type UIKey = keyof (typeof ui)['ko'];
 
+/** A `{name}` placeholder inside a UI string. */
+const placeholder = /\{(\w+)\}/g;
+
 export function useTranslations(locale: Locale) {
   return (key: UIKey, values: Record<string, string | number> = {}): string =>
-    ui[locale][key].replace(/\{(\w+)\}/g, (_, name: string) => String(values[name] ?? `{${name}}`));
+    ui[locale][key].replace(placeholder, (_, name: string) => String(values[name] ?? `{${name}}`));
 }
