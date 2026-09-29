@@ -8,8 +8,9 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
-import { locales, type Locale } from '../i18n/config';
+import { intlLocales, locales, type Locale } from '../i18n/config';
 import { localeFile } from '../i18n/utils';
+import { OG_HEIGHT, OG_WIDTH, ogImagePath } from '../lib/og';
 
 interface Props {
   locale: Locale;
@@ -17,11 +18,18 @@ interface Props {
   description?: string;
   /** This page in other languages, for hreflang. Only languages that have it. */
   alternates?: Partial<Record<Locale, string>>;
+  /** Share image path; defaults to the locale's image. */
+  image?: string;
+  /** Set on posts so shares show them as articles. */
+  published?: Date;
+  /** For pages that should not be indexed or have a canonical URL (404). */
+  noindex?: boolean;
 }
 
-const { locale, title, description, alternates = {} } = Astro.props;
-// hreflang wants absolute URLs; they become absolute once `site` is configured.
-const absolute = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
+const { locale, title, description, alternates = {}, image = ogImagePath(locale), published, noindex = false } = Astro.props;
+// Links in <head> must be absolute; `site` comes from astro.config.mjs.
+const absolute = (path: string) => new URL(path, Astro.site).href;
+const canonical = absolute(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -39,6 +47,19 @@ const absolute = (path: string) => (Astro.site ? new URL(path, Astro.site).href 
     <link rel="icon" href="/favicon.ico" />
     {Object.entries(alternates).map(([l, href]) => <link rel="alternate" hreflang={l} href={absolute(href)} />)}
     <link rel="alternate" type="application/rss+xml" title={`Sonsu Lee (${locale})`} href={absolute(localeFile(locale, 'rss.xml'))} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <meta property="og:site_name" content="Sonsu Lee" />
+    <meta property="og:type" content={published ? 'article' : 'website'} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    {!noindex && <meta property="og:url" content={canonical} />}
+    <meta property="og:locale" content={intlLocales[locale].replace('-', '_')} />
+    <meta property="og:image" content={absolute(image)} />
+    <meta property="og:image:width" content={String(OG_WIDTH)} />
+    <meta property="og:image:height" content={String(OG_HEIGHT)} />
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
 
     {/* Inter only on English pages; elsewhere Pretendard sets the Latin. */}
     {locale === 'en' && <Font cssVariable="--font-inter" preload={[{ subset: 'latin' }]} />}

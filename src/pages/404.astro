@@ -23,7 +23,7 @@ const variants = await Promise.all(
 const titles = Object.fromEntries(variants.map(({ locale, t }) => [locale, `${t('notFound.title')} — Sonsu Lee`]));
 ---
 
-<BaseLayout locale={defaultLocale} title={titles[defaultLocale]}>
+<BaseLayout locale={defaultLocale} title={titles[defaultLocale]} noindex>
   <script is:inline slot="head" define:vars={{ locales, fallback: defaultLocale, titles }}>
     const fromPath = location.pathname.split('/')[1];
     const fromBrowser = (navigator.languages || [navigator.language])

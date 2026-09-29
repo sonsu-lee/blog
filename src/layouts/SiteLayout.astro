@@ -11,12 +11,14 @@ interface Props {
   alternates: Record<Locale, string>;
   /** Versions of this page that really exist, for hreflang. Defaults to `alternates`. */
   translations?: Partial<Record<Locale, string>>;
+  image?: string;
+  published?: Date;
 }
 
-const { locale, title, description, alternates, translations = alternates } = Astro.props;
+const { locale, title, description, alternates, translations = alternates, image, published } = Astro.props;
 ---
 
-<BaseLayout locale={locale} title={title} description={description} alternates={translations}>
+<BaseLayout locale={locale} title={title} description={description} alternates={translations} image={image} published={published}>
   <SiteFrame locale={locale} alternates={alternates}>
     <slot />
   </SiteFrame>

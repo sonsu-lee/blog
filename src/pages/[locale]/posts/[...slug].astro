@@ -9,6 +9,7 @@ import Quote from '../../../components/mdx/Quote.astro';
 import { localeNames, locales, type Locale } from '../../../i18n/config';
 import { formatDate, localePath } from '../../../i18n/utils';
 import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { ogImagePath } from '../../../lib/og';
 import { getAdjacent, getAllPosts, getTranslations, postLocale, postPath, postSlug, type Post } from '../../../lib/posts';
 
 export async function getStaticPaths() {
@@ -34,7 +35,15 @@ const existing = Object.fromEntries(Object.entries(translations).map(([l, p]) =>
 const otherLanguages = locales.filter((l) => l !== locale && translations[l]);
 ---
 
-<SiteLayout locale={locale} title={post.data.title} description={post.data.description} alternates={alternates} translations={existing}>
+<SiteLayout
+  locale={locale}
+  title={post.data.title}
+  description={post.data.description}
+  alternates={alternates}
+  translations={existing}
+  image={ogImagePath(locale, postSlug(post))}
+  published={post.data.date}
+>
   <article>
     <header>
       <h1>{post.data.title}</h1>
