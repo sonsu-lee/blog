@@ -51,6 +51,8 @@ body {
   line-height: var(--leading-body);
   font-optical-sizing: auto;
   font-variant-ligatures: none;
+  /* Inter's alternate one (cv01) and round quotes and commas (ss03), as on emilkowal.ski. Pretendard's Hangul and kana have neither. */
+  font-feature-settings: "cv01", "ss03";
   /* Korean breaks between words, not between syllables; a word too long for the line still wraps. */
   word-break: keep-all;
   overflow-wrap: break-word;
@@ -58,6 +60,20 @@ body {
   font-synthesis-style: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Japanese, ready for passages marked lang="ja": its own font stack, and ordinary
+ * line breaking, since keep-all would never break a Japanese sentence (it has no spaces).
+ */
+:lang(ja) {
+  font-family: var(--font-body-ja);
+  word-break: normal;
+  line-break: strict;
+}
+
+:is(h1, h2, h3, h4):lang(ja) {
+  word-break: auto-phrase;
 }
 
 h1,
@@ -118,6 +134,7 @@ code,
 kbd,
 pre {
   font-family: var(--font-mono);
+  font-feature-settings: normal;
 }
 
 :not(pre) > code {

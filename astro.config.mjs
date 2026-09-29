@@ -23,7 +23,19 @@ export default defineConfig({
     },
   },
   fonts: [
-    // Code only. Body text is Pretendard, imported as a stylesheet in BaseLayout (see the note there).
+    // Latin in Inter 4 with its optical-size axis, the same font emilkowal.ski uses. No fallbacks:
+    // the stack in tokens.css continues with Pretendard, whose Latin is drawn from Inter.
+    {
+      name: 'Inter',
+      cssVariable: '--font-inter',
+      provider: fontProviders.google(),
+      weights: ['400 600'],
+      styles: ['normal'],
+      subsets: ['latin', 'latin-ext'],
+      fallbacks: [],
+      options: { experimental: { variableAxis: { opsz: [['14', '32']] } } },
+    },
+    // Code. Hangul and kana come from Pretendard, imported as stylesheets in BaseLayout (see the note there).
     {
       name: 'JetBrains Mono',
       cssVariable: '--font-jetbrains-mono',

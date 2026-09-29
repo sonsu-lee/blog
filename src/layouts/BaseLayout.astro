@@ -1,9 +1,11 @@
 ---
 import { Font } from 'astro:assets';
-// Pretendard ships 92 @font-face rules, one per unicode-range chunk. Importing its own
-// stylesheet bundles them into a cached external CSS file, where the Fonts API would inline
-// all of them into every page. Browsers download only the chunks a page actually uses.
+// Pretendard ships one @font-face per unicode-range chunk (92 for Korean, 119 for Japanese).
+// Importing its own stylesheets bundles them into a cached external CSS file, where the Fonts API
+// would inline all of them into every page. Browsers download only the chunks a page actually
+// uses, so the Japanese faces cost nothing until a page has Japanese text.
 import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import { name } from '../data/profile';
@@ -67,6 +69,7 @@ const canonical = absolute(Astro.url.pathname);
     {published && <meta property="article:published_time" content={published.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
 
+    <Font cssVariable="--font-inter" preload={[{ subset: 'latin' }]} />
     <Font cssVariable="--font-jetbrains-mono" />
     <slot name="head" />
   </head>

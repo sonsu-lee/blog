@@ -112,22 +112,28 @@
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
   /*
-   * Type. One size throughout; hierarchy comes from weight and color.
-   * The body runs at 17px because Hangul reads small next to Latin at the same size.
+   * Type. One size throughout, as on emilkowal.ski: 16px, running text on 26.4px lines,
+   * UI text on 24px. Hierarchy comes from weight and color.
    */
-  --size-body: 17px;
-  --leading-body: 1.75;
+  --size-body: 16px;
+  --leading-body: 1.65;
   --leading-tight: 1.5;
-  --size-small: 15px;
-  --size-caption: 13px;
-  --leading-caption: 1.5;
-  --size-footnote: 15px;
-  --leading-footnote: 1.65;
+  --size-small: 14px;
+  --size-caption: 12px;
+  --leading-caption: 1.333;
+  --size-footnote: 14px;
+  --leading-footnote: 1.64;
   --size-quote: 26px;
   --leading-quote: 1.45;
 
-  /* Families. Pretendard is imported as a stylesheet in BaseLayout; JetBrains Mono comes from the Fonts API. */
-  --font-body: "Pretendard Variable", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  /*
+   * Families. Latin is set in Inter (Fonts API), Hangul in Pretendard and kana/kanji in
+   * Pretendard JP (stylesheets in BaseLayout). Pretendard's own Latin, drawn from Inter,
+   * stands in until Inter loads. Japanese passages (lang="ja") put Pretendard JP first so
+   * shared kanji take its Japanese forms.
+   */
+  --font-body: var(--font-inter, "Inter"), "Pretendard Variable", "Pretendard JP Variable", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-body-ja: var(--font-inter, "Inter"), "Pretendard JP Variable", "Pretendard Variable", "Hiragino Sans", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono, ui-monospace), ui-monospace, monospace;
 }
 
