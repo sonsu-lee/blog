@@ -1,7 +1,7 @@
 ---
 import ProfileLinks from '../components/ProfileLinks.astro';
 import Section from '../components/Section.astro';
-import { name, pageTitle, visibleLinks } from '../data/profile';
+import { name, pageTitle } from '../data/profile';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 // Like emilkowal.ski: no work history here; the home page's "Today" names the current job.
@@ -14,13 +14,9 @@ const intro = `안녕하세요, ${name}입니다. 웹 인터페이스를 만들�
     <p>{intro}</p>
   </div>
 
-  {
-    visibleLinks.length > 0 && (
-      <Section label="More">
-        <ProfileLinks />
-      </Section>
-    )
-  }
+  <Section label="More">
+    <ProfileLinks />
+  </Section>
 </SiteLayout>
 
 <style>

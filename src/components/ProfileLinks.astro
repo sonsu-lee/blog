@@ -1,18 +1,9 @@
 ---
-import { visibleLinks } from '../data/profile';
+import { links } from '../data/profile';
+
+// One line, like emilkowal.ski's "You can see more of my work on Twitter and more of my code on GitHub."
 ---
 
-{
-  visibleLinks.length > 0 && (
-    <p class="links">
-      {visibleLinks.map((link, i) => (
-        <>
-          {i > 0 && <span aria-hidden="true"> · </span>}
-          <a href={link.href} {...(!link.href.startsWith('mailto:') && { target: '_blank', rel: 'noopener me' })}>
-            {link.label}
-          </a>
-        </>
-      ))}
-    </p>
-  )
-}
+<p>
+  제 작업은 <a href={links.x} target="_blank" rel="noopener me">X</a>에서, 코드는 <a href={links.github} target="_blank" rel="noopener me">GitHub</a>에서 더 볼 수 있습니다.
+</p>

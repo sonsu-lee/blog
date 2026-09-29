@@ -11,18 +11,10 @@ export function pageTitle(page?: string): string {
   return page ? `${page} — ${name}` : name;
 }
 
-export interface ProfileLink {
-  label: string;
-  href: string;
-  /** Hidden links stay here, ready to show by flipping this flag. */
-  visible: boolean;
-}
-
-export const profileLinks: ProfileLink[] = [
-  { label: 'GitHub', href: 'https://github.com/sonsu-lee', visible: true },
-  { label: 'Zenn', href: 'https://zenn.dev/sonsu', visible: false },
-  { label: 'X', href: 'https://x.com/LeeSungsu84451', visible: false },
-  { label: 'Email', href: 'mailto:leesonsu07@gmail.com', visible: false },
-];
-
-export const visibleLinks = profileLinks.filter((link) => link.visible);
+/** Where the More sentence points. Zenn and email aren't shown anywhere yet. */
+export const links = {
+  x: 'https://x.com/LeeSungsu84451',
+  github: 'https://github.com/sonsu-lee',
+  zenn: 'https://zenn.dev/sonsu',
+  email: 'mailto:leesonsu07@gmail.com',
+};
