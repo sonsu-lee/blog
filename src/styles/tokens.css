@@ -29,7 +29,7 @@
   --color-bg-hover: var(--sand-3);
   --color-bg-active: var(--sand-4);
   --color-bg-card: light-dark(#ffffff, var(--sand-2));
-  --color-bg-row-hover: light-dark(#f5f4f4, var(--sand-3));
+  --color-bg-row-hover: light-dark(#f5f4f4, var(--sand-2));
   --color-bg-selection: var(--sand-5);
 
   /* Color: lines. Prefer --shadow-border (a translucent ring) over solid borders. */
