@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'button'> & {
+  /** Let this button shrink on press. Off shows the "before" side of a comparison. */
+  press?: boolean;
+};
+
+const { press = true, ...rest } = Astro.props;
+---
+
+<button type="button" class="button" data-press={press ? '' : undefined} {...rest}>
+  <slot />
+</button>
+
+<style>
+  .button {
+    padding: var(--space-2) var(--space-6);
+    border: 0;
+    border-radius: var(--radius-full);
+    background: var(--color-text-default);
+    color: var(--color-bg-default);
+    font-weight: 500;
+    line-height: var(--leading-tight);
+    cursor: pointer;
+  }
+
+  /* Pressing shrinks the button to 0.97 and lets it spring back over 160ms. Movement only, so it respects reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .button[data-press] {
+      transition: transform var(--duration-press) var(--ease-out);
+    }
+
+    .button[data-press]:active {
+      transform: scale(0.97);
+    }
+  }
+</style>

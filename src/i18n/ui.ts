@@ -15,6 +15,8 @@ export const ui = {
     'posts.summary.one': '한국어로 쓴 글 {count}편. 번역본이 있는 글은 제목 아래에 표시됩니다.',
     'posts.summary.other': '한국어로 쓴 글 {count}편. 번역본이 있는 글은 제목 아래에 표시됩니다.',
     'posts.empty': '아직 쓴 글이 없습니다.',
+    'post.older': '이전 글',
+    'post.newer': '다음 글',
   },
   ja: {
     'site.role': 'ソフトウェアエンジニア',
@@ -29,6 +31,8 @@ export const ui = {
     'posts.summary.one': '日本語で書いた記事 {count}本。翻訳がある記事は、タイトルの下に表示されます。',
     'posts.summary.other': '日本語で書いた記事 {count}本。翻訳がある記事は、タイトルの下に表示されます。',
     'posts.empty': 'まだ記事がありません。',
+    'post.older': '前の記事',
+    'post.newer': '次の記事',
   },
   en: {
     'site.role': 'Software Engineer',
@@ -43,6 +47,8 @@ export const ui = {
     'posts.summary.one': '{count} post in English. Posts with translations list them under the title.',
     'posts.summary.other': '{count} posts in English. Posts with translations list them under the title.',
     'posts.empty': 'No posts yet.',
+    'post.older': 'Previous',
+    'post.newer': 'Next',
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

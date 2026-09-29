@@ -51,15 +51,6 @@
   --color-focus-ring: var(--sand-11);
   --color-focus-within: rgb(0 0 0 / 0.2);
 
-  /* Code: Shiki github-light, as CSS variables so the theme switches without re-highlighting */
-  --shiki-token-fg: #24292e;
-  --shiki-token-keyword: #d73a49;
-  --shiki-token-constant: #005cc5;
-  --shiki-token-function: #6f42c1;
-  --shiki-token-variable: #e36209;
-  --shiki-token-string: #032f62;
-  --shiki-token-comment: #6a737d;
-  --shiki-token-tag: #22863a;
 
   /* Shadows and rings */
   --shadow-border: 0 0 0 1px var(--color-border-alpha);
@@ -157,15 +148,6 @@
     --color-border-alpha: rgb(255 255 255 / 0.08);
     --color-text-prose: rgb(238 238 236 / 0.9);
     --color-focus-within: rgb(255 255 255 / 0.2);
-
-    --shiki-token-fg: #e1e4e8;
-    --shiki-token-keyword: #f97583;
-    --shiki-token-constant: #79b8ff;
-    --shiki-token-function: #b392f0;
-    --shiki-token-variable: #ffab70;
-    --shiki-token-string: #9ecbff;
-    --shiki-token-comment: #6a737d;
-    --shiki-token-tag: #85e89d;
   }
 }
 

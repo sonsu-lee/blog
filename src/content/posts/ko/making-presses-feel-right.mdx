@@ -1,0 +1,45 @@
+---
+title: "누르는 느낌 만들기"
+description: "scale(0.97) 하나로 인터페이스가 대답하게 하기."
+date: 2026-08-02
+draft: true
+---
+
+인터페이스는 사용자의 말을 듣고 있다고 느껴져야 합니다. 폼을 보내면 로딩 상태를, 복사하면 완료 상태를 가능한 한 빨리 보여줘야 합니다.
+
+가장 쉬운 방법은 버튼을 누를 때 살짝 줄이는 것입니다. `:active` 상태에 `scale(0.97)` 하나면 충분합니다.
+
+<Demo caption="버튼을 눌러 보세요. 오른쪽은 누르는 동안 0.97배로 줄어듭니다.">
+  <Button press={false}>붙여넣기</Button>
+  <Button>붙여넣기</Button>
+</Demo>
+
+## 자주 보는 것일수록 덜 움직이기
+
+하루에 수십 번 보는 요소는 움직임을 줄이거나 없앱니다. 이 블로그에서는 이렇게 정했습니다.
+
+- 목록 hover 배경은 전환 없이 바로 바뀝니다
+- 링크 밑줄 색만 hover 때 진해집니다
+- 키보드로 한 동작은 애니메이션하지 않습니다
+
+```css
+.row:hover {
+  background: var(--color-bg-row-hover);
+  /* transition 없음: 하루에 수십 번 보는 요소 */
+}
+
+.button:active {
+  transform: scale(0.97);
+  transition: transform 160ms var(--ease-out);
+}
+```
+
+움직임을 덜어내면 남는 것은 글자입니다. 그래서 이 블로그는 글자 크기를 하나만 쓰고, *굵기와 색*으로만 구분합니다.[^1]
+
+<Quote author="Emil Kowalski" source="Building a Toast Component">
+  사용자가 알아차리는 디테일이 적을수록 좋다.
+</Quote>
+
+좋은 디테일은 눈에 띄지 않습니다. 대신 쌓입니다. 하나하나는 들리지 않을 만큼 작지만, 모두 같은 음을 낼 때 전체가 다르게 느껴집니다.
+
+[^1]: 제목과 h2도 본문과 같은 17px입니다. 한국어만 일본어·영어보다 1px 크게 둡니다.

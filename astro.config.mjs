@@ -1,7 +1,16 @@
 // @ts-check
+import mdx from '@astrojs/mdx';
 import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
+  integrations: [mdx()],
+  markdown: {
+    shikiConfig: {
+      // Both themes are emitted as --shiki-light / --shiki-dark; prose.css picks one per color scheme.
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
+    },
+  },
   i18n: {
     defaultLocale: 'ko',
     locales: ['ko', 'ja', 'en'],

@@ -1,0 +1,181 @@
+---
+// Typography for post bodies rendered from Markdown/MDX. Everything stays one size;
+// rhythm comes from spacing: 26px between paragraphs, 56/20 around h2, 32 around blocks.
+---
+
+<div class="prose">
+  <slot />
+</div>
+
+<style>
+  .prose {
+    color: var(--color-text-prose);
+  }
+
+  .prose :global(:where(p, ul, ol)) {
+    margin-block: 0 var(--prose-paragraph);
+  }
+
+  /* No lone word (or lone kana) on a paragraph's last line; short Japanese lines break by phrase. */
+  .prose :global(:where(p, li)) {
+    text-wrap: pretty;
+  }
+
+  .prose :global(li:lang(ja)) {
+    word-break: auto-phrase;
+  }
+
+  .prose :global(> :last-child) {
+    margin-bottom: 0;
+  }
+
+  .prose :global(:where(h2, h3, strong)) {
+    color: var(--color-text-default);
+  }
+
+  .prose :global(h2) {
+    margin: var(--prose-h2-top) 0 var(--prose-h2-bottom);
+  }
+
+  .prose :global(h3) {
+    margin: var(--prose-paragraph) 0 var(--space-3);
+  }
+
+  .prose :global(:is(h2, h3):first-child) {
+    margin-top: 0;
+  }
+
+  /* Lists: no bullets, a literal dash, pulled up to sit 10px under the paragraph. */
+  .prose :global(:is(ul, ol)) {
+    display: grid;
+    gap: var(--space-2);
+    padding: 0;
+  }
+
+  .prose :global(p + :is(ul, ol)) {
+    margin-top: calc(10px - var(--prose-paragraph));
+  }
+
+  .prose :global(ul) {
+    list-style: none;
+  }
+
+  .prose :global(ul > li) {
+    display: flex;
+    gap: 6px;
+  }
+
+  .prose :global(ul > li::before) {
+    content: '-';
+    flex: none;
+  }
+
+  .prose :global(ol) {
+    padding-left: 1.25em;
+  }
+
+  .prose :global(hr) {
+    margin: var(--space-16) auto 88px;
+    border: 0;
+    text-align: center;
+  }
+
+  .prose :global(hr::after) {
+    content: '***';
+    color: var(--color-text-caption);
+    letter-spacing: 0.75em;
+  }
+
+  /* Code blocks: a white card, highlighted with Shiki's github-light/dark. No copy button or file name. */
+  .prose :global(pre) {
+    margin: 28px 0 var(--prose-block);
+    padding: var(--space-4);
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-card) !important;
+    box-shadow: var(--shadow-small);
+    font-size: 13px;
+    line-height: 20px;
+    tab-size: 2;
+  }
+
+  .prose :global(pre code) {
+    font-size: inherit;
+  }
+
+  .prose :global(.astro-code),
+  .prose :global(.astro-code span) {
+    color: var(--shiki-light);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .prose :global(.astro-code),
+    .prose :global(.astro-code span) {
+      color: var(--shiki-dark);
+    }
+  }
+
+  @media (max-width: 639px) {
+    .prose :global(pre) {
+      margin-inline: calc(var(--layout-gutter) * -1);
+      padding: var(--space-6);
+      border-block: 1px solid var(--color-border-soft);
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+
+  /* Footnotes (GFM): small references, then the list after a hairline, 80px below the text. */
+  .prose :global(sup) {
+    font-size: 0.625em;
+    line-height: 0;
+  }
+
+  .prose :global([data-footnote-ref]) {
+    text-decoration: none;
+  }
+
+  .prose :global([data-footnotes]) {
+    margin-top: var(--prose-footnotes-top);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-divider);
+    font-size: var(--size-footnote);
+    line-height: var(--leading-footnote);
+  }
+
+  .prose :global([data-footnotes] ol) {
+    gap: var(--space-3);
+    margin: 0;
+    padding-left: 1.5em;
+  }
+
+  .prose :global([data-footnotes] li) {
+    color: var(--color-text-muted);
+    text-wrap: pretty;
+  }
+
+  .prose :global([data-footnotes] li::marker) {
+    color: var(--color-text-muted);
+  }
+
+  .prose :global([data-footnotes] p) {
+    margin: 0;
+    color: var(--color-text-default);
+    opacity: 0.8;
+  }
+
+  .prose :global([data-footnote-backref]) {
+    margin-left: var(--space-1);
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .prose :global(.sr-only) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

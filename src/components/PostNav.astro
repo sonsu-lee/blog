@@ -1,0 +1,80 @@
+---
+import type { Locale } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+import { postPath, type Post } from '../lib/posts';
+
+interface Props {
+  locale: Locale;
+  older?: Post;
+  newer?: Post;
+}
+
+const { locale, older, newer } = Astro.props;
+const t = useTranslations(locale);
+---
+
+{
+  (older || newer) && (
+    <nav>
+      {older ? (
+        <a href={postPath(older)} rel="prev">
+          <span class="label">{t('post.older')}</span>
+          <span class="title">{older.data.title}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {newer && (
+        <a href={postPath(newer)} rel="next" class="newer">
+          <span class="label">{t('post.newer')}</span>
+          <span class="title">{newer.data.title}</span>
+        </a>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    margin-top: var(--prose-nav-top);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-divider);
+    font-size: var(--size-small);
+    line-height: var(--leading-tight);
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    text-decoration: none;
+  }
+
+  .newer {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .label {
+    color: var(--color-text-caption);
+  }
+
+  .title {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover .title {
+      text-decoration: underline;
+      text-decoration-thickness: 0.08em;
+      text-underline-position: from-font;
+      text-decoration-color: var(--color-link-underline);
+    }
+  }
+</style>

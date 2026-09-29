@@ -7,13 +7,16 @@ interface Props {
   locale: Locale;
   title: string;
   description?: string;
+  /** Where the language switcher sends each language. */
   alternates: Record<Locale, string>;
+  /** Versions of this page that really exist, for hreflang. Defaults to `alternates`. */
+  translations?: Partial<Record<Locale, string>>;
 }
 
-const { locale, title, description, alternates } = Astro.props;
+const { locale, title, description, alternates, translations = alternates } = Astro.props;
 ---
 
-<BaseLayout locale={locale} title={title} description={description} alternates={alternates}>
+<BaseLayout locale={locale} title={title} description={description} alternates={translations}>
   <div class="page">
     <Header locale={locale} alternates={alternates} />
     <main>

@@ -1,0 +1,86 @@
+---
+import { render } from 'astro:content';
+import PostNav from '../../../components/PostNav.astro';
+import Prose from '../../../components/Prose.astro';
+import Button from '../../../components/mdx/Button.astro';
+import Demo from '../../../components/mdx/Demo.astro';
+import Heading from '../../../components/mdx/Heading.astro';
+import Quote from '../../../components/mdx/Quote.astro';
+import { localeNames, locales, type Locale } from '../../../i18n/config';
+import { formatDate, localePath } from '../../../i18n/utils';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { getAdjacent, getAllPosts, getTranslations, postLocale, postPath, postSlug, type Post } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({ params: { locale: postLocale(post), slug: postSlug(post) }, props: { post } }));
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const locale = postLocale(post);
+const translations = await getTranslations(post);
+const { older, newer } = await getAdjacent(post);
+const { Content } = await render(post);
+
+// The switcher goes to this post in another language when it exists, otherwise to that language's home.
+const alternates = Object.fromEntries(
+  locales.map((l) => [l, translations[l] ? postPath(translations[l]) : localePath(l)]),
+) as Record<Locale, string>;
+const existing = Object.fromEntries(Object.entries(translations).map(([l, p]) => [l, postPath(p)]));
+const otherLanguages = locales.filter((l) => l !== locale && translations[l]);
+---
+
+<SiteLayout locale={locale} title={post.data.title} description={post.data.description} alternates={alternates} translations={existing}>
+  <article>
+    <header>
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date, locale)}</time>
+        {
+          otherLanguages.map((l) => (
+            <>
+              <span aria-hidden="true"> · </span>
+              <a href={postPath(translations[l]!)} hreflang={l} lang={l}>
+                {localeNames[l]}
+              </a>
+            </>
+          ))
+        }
+      </p>
+    </header>
+
+    <Prose>
+      <Content components={{ h2: Heading, Demo, Button, Quote }} />
+    </Prose>
+  </article>
+
+  <PostNav locale={locale} older={older} newer={newer} />
+</SiteLayout>
+
+<style>
+  header {
+    margin-bottom: var(--space-8);
+  }
+
+  h1 {
+    font-weight: 600;
+  }
+
+  .meta {
+    color: var(--color-text-muted);
+  }
+
+  /* Language names keep their own font, pinned like the switcher. */
+  .meta a:lang(ko),
+  .meta a:lang(en) {
+    font-family: var(--font-pretendard), system-ui, sans-serif;
+  }
+
+  .meta a:lang(ja) {
+    font-family: var(--font-pretendard-jp), system-ui, sans-serif;
+  }
+</style>

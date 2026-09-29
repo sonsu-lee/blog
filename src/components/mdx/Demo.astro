@@ -1,0 +1,62 @@
+---
+interface Props {
+  /** A short line under the frame. */
+  caption?: string;
+  /** Frame height in px. emilkowal.ski uses 192, 256, 332, or 400. */
+  height?: number;
+}
+
+const { caption, height = 256 } = Astro.props;
+---
+
+<figure class="demo">
+  <div class="frame" style={`--demo-height: ${height}px`}>
+    <slot />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  /* A white card with a translucent 1px ring, on the #FDFDFC page. Full-bleed on phones. */
+  .demo {
+    margin-block: var(--prose-block);
+  }
+
+  .frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    min-height: var(--demo-height);
+    padding: var(--space-6) var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-card);
+    box-shadow: var(--shadow-small);
+  }
+
+  figcaption {
+    margin-top: var(--prose-caption);
+    color: var(--color-text-caption);
+    font-size: var(--size-caption);
+    line-height: var(--leading-caption);
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  figcaption:lang(ja) {
+    word-break: auto-phrase;
+  }
+
+  @media (max-width: 639px) {
+    .frame {
+      margin-inline: calc(var(--layout-gutter) * -1);
+      border-block: 1px solid var(--color-border-soft);
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    figcaption {
+      padding-inline: var(--space-2);
+    }
+  }
+</style>

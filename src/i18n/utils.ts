@@ -1,5 +1,5 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { locales, type Locale } from './config';
+import { intlLocales, locales, type Locale } from './config';
 
 /** A path inside a locale, e.g. localePath('ja', 'posts') → /ja/posts/ */
 export function localePath(locale: Locale, path = ''): string {
@@ -14,4 +14,8 @@ export function alternatesFor(path = ''): Record<Locale, string> {
 /** getStaticPaths for pages that exist in every locale. */
 export function localeStaticPaths() {
   return locales.map((locale) => ({ params: { locale } }));
+}
+
+export function formatDate(date: Date, locale: Locale): string {
+  return new Intl.DateTimeFormat(intlLocales[locale], { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(date);
 }

@@ -1,0 +1,45 @@
+---
+title: "Making presses feel right"
+description: "Letting the interface answer back with scale(0.97)."
+date: 2026-08-02
+draft: true
+---
+
+An interface should feel like it's listening. Submitting a form should show a loading state, and copying should show a success state, as soon as possible.
+
+The easiest way is to shrink a button slightly while it's pressed. A `scale(0.97)` on the `:active` state is all you need.
+
+<Demo caption="Press the buttons. The one on the right shrinks to 0.97 while pressed.">
+  <Button press={false}>Paste</Button>
+  <Button>Paste</Button>
+</Demo>
+
+## Move less what you see often
+
+Elements you see dozens of times a day should move less, or not at all. Here's what I settled on for this blog.
+
+- List hover backgrounds change instantly, with no transition
+- Only the link underline color darkens on hover
+- Actions taken with the keyboard are never animated
+
+```css
+.row:hover {
+  background: var(--color-bg-row-hover);
+  /* no transition: seen dozens of times a day */
+}
+
+.button:active {
+  transform: scale(0.97);
+  transition: transform 160ms var(--ease-out);
+}
+```
+
+Take motion away and what's left is type. That's why this blog uses a single font size and separates things by *weight and color* alone.[^1]
+
+<Quote author="Emil Kowalski" source="Building a Toast Component">
+  The less details users notice, the better.
+</Quote>
+
+Good details don't stand out. They add up. Each one is too quiet to hear on its own, but when they all sing in tune, the whole thing feels different.
+
+[^1]: Titles and h2s are the same 16px as the body. Only Korean is set 1px larger.

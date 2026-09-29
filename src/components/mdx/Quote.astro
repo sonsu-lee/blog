@@ -1,0 +1,80 @@
+---
+interface Props {
+  /** Who said it. */
+  author: string;
+  /** Where it was said. */
+  source?: string;
+}
+
+const { author, source } = Astro.props;
+---
+
+<figure class="quote">
+  <blockquote>
+    <slot />
+  </blockquote>
+  <figcaption>
+    <span class="author">{author}</span>
+    {source && <cite>{source}</cite>}
+  </figcaption>
+</figure>
+
+<style>
+  .quote {
+    margin-block: var(--space-16);
+  }
+
+  /* A serif pull quote with the opening mark hung into the margin. */
+  blockquote {
+    position: relative;
+    color: var(--color-text-default);
+    font-family: var(--font-source-serif, serif);
+    font-size: var(--size-quote);
+    line-height: var(--leading-quote);
+    text-wrap: balance;
+  }
+
+  blockquote:is(:lang(ko), :lang(ja)) {
+    font-family: inherit;
+    font-weight: 500;
+  }
+
+  blockquote::before {
+    content: '“';
+    position: absolute;
+    left: -0.5em;
+    color: var(--color-text-subtle);
+  }
+
+  blockquote :global(p) {
+    margin: 0;
+  }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    font-size: var(--size-caption);
+    line-height: var(--leading-caption);
+  }
+
+  .author {
+    font-weight: 500;
+  }
+
+  cite {
+    color: var(--color-text-muted);
+    font-style: normal;
+  }
+
+  /* A hairline fills the rest of the line on wider screens. */
+  @media (min-width: 768px) {
+    figcaption::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border-soft);
+    }
+  }
+</style>

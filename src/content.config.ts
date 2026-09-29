@@ -3,13 +3,13 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 /**
- * Posts live in one folder per locale: src/content/posts/{ko,ja,en}/<slug>.md.
+ * Posts live in one folder per locale: src/content/posts/{ko,ja,en}/<slug>.{md,mdx}.
  * A post and its translations share a file name, so /ko/posts/foo/ and
  * /ja/posts/foo/ are the same post in two languages. A post may exist in
  * only one language.
  */
 const posts = defineCollection({
-  loader: glob({ base: './src/content/posts', pattern: '**/[^_]*.md' }),
+  loader: glob({ base: './src/content/posts', pattern: '**/[^_]*.{md,mdx}' }),
   schema: z.object({
     title: z.string(),
     /** One line shown under the title in lists. */

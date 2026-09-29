@@ -13,3 +13,10 @@ export const localeNames: Record<Locale, string> = {
   ja: '日本語',
   en: 'English',
 };
+
+/** BCP 47 tags for Intl formatting. */
+export const intlLocales: Record<Locale, string> = {
+  ko: 'ko-KR',
+  ja: 'ja-JP',
+  en: 'en-US',
+};
