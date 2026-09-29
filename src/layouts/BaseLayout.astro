@@ -8,7 +8,7 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
-import type { Locale } from '../i18n/config';
+import { locales, type Locale } from '../i18n/config';
 
 interface Props {
   locale: Locale;
@@ -42,6 +42,21 @@ const absolute = (path: string) => (Astro.site ? new URL(path, Astro.site).href 
     {locale === 'en' && <Font cssVariable="--font-inter" preload={[{ subset: 'latin' }]} />}
     <Font cssVariable="--font-jetbrains-mono" />
     {locale === 'en' && <Font cssVariable="--font-source-serif" />}
+
+    <script is:inline define:vars={{ locales }}>
+      // Tag navigations between the same page in two languages, so the post title
+      // can play its language-switch transition (see global.css). Browsers without
+      // the Navigation API or view transitions just navigate normally.
+      const localePrefix = new RegExp(`^/(${locales.join('|')})(?=/)`);
+      const pathWithoutLocale = (url) => new URL(url).pathname.replace(localePrefix, '');
+
+      addEventListener('pagereveal', (event) => {
+        const from = window.navigation?.activation?.from?.url;
+        const to = window.navigation?.activation?.entry?.url;
+        if (!event.viewTransition || !from || !to || from === to) return;
+        if (pathWithoutLocale(from) === pathWithoutLocale(to)) event.viewTransition.types.add('translate');
+      });
+    </script>
     <slot name="head" />
   </head>
   <body>

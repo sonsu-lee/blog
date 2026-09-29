@@ -68,6 +68,8 @@ const otherLanguages = locales.filter((l) => l !== locale && translations[l]);
 
   h1 {
     font-weight: 600;
+    /* Pairs with the same title in other languages for the language-switch transition. */
+    view-transition-name: post-title;
   }
 
   .meta {
