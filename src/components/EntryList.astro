@@ -1,0 +1,29 @@
+---
+import Entry from './Entry.astro';
+
+interface Props {
+  entries: Array<{ title: string; description: string; href: string; external?: boolean }>;
+}
+
+const { entries } = Astro.props;
+---
+
+<ul>
+  {
+    entries.map((e) => (
+      <li>
+        <Entry {...e} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  ul {
+    display: grid;
+    gap: var(--list-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

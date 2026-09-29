@@ -1,0 +1,64 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  external?: boolean;
+}
+
+const { title, description, href, external = false } = Astro.props;
+---
+
+<a class="entry" href={href} {...external && { target: '_blank', rel: 'noopener' }}>
+  <span class="title">{title}</span>
+  <span class="description">{description}</span>
+</a>
+
+<style>
+  /*
+   * Title over a one-line description, no date. The row bleeds 12px into the
+   * gutter so its hover background frames the text without shifting it.
+   * The background changes instantly: rows are hovered dozens of times a visit,
+   * so they get no transition.
+   */
+  .entry {
+    display: flex;
+    flex-direction: column;
+    margin-inline: calc(var(--space-3) * -1);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    line-height: var(--leading-tight);
+    text-decoration: none;
+  }
+
+  /* Short lines wrap badly: avoid a lone word on the last line, and break Japanese by phrase. */
+  .title,
+  .description {
+    text-wrap: pretty;
+  }
+
+  .entry:lang(ja) :is(.title, .description) {
+    word-break: auto-phrase;
+  }
+
+  .description {
+    color: var(--color-text-muted);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .entry:hover {
+      background: var(--color-bg-row-hover);
+    }
+  }
+
+  .entry:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  @media (max-width: 639px) {
+    .entry {
+      padding-block: 0;
+    }
+  }
+</style>

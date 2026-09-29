@@ -1,36 +1,61 @@
 ---
-import SiteLayout from '../../layouts/SiteLayout.astro';
+import EntryList from '../../components/EntryList.astro';
+import Section from '../../components/Section.astro';
+import { projects } from '../../data/projects';
 import type { Locale } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
-import { alternatesFor, localeStaticPaths } from '../../i18n/utils';
+import { alternatesFor, localePath, localeStaticPaths } from '../../i18n/utils';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getPosts, postPath } from '../../lib/posts';
 
 export function getStaticPaths() {
   return localeStaticPaths();
 }
 
+const LATEST = 5;
+
 const locale = Astro.params.locale as Locale;
 const t = useTranslations(locale);
+const posts = await getPosts(locale);
 ---
 
 <SiteLayout locale={locale} title="Sonsu Lee" description={t('home.now.body')} alternates={alternatesFor()}>
-  <section>
-    <h2>{t('home.now')}</h2>
+  <Section label={t('home.now')}>
     <p>{t('home.now.body')}</p>
     <p>{t('home.now.blog')}</p>
-  </section>
+  </Section>
+
+  {
+    posts.length > 0 && (
+      <Section label={t('home.writing')} content="list">
+        <EntryList
+          entries={posts.slice(0, LATEST).map((p) => ({ title: p.data.title, description: p.data.description, href: postPath(p) }))}
+        />
+        <p class="all">
+          <a href={localePath(locale, 'posts')}>{t('home.allPosts')}</a> →
+        </p>
+      </Section>
+    )
+  }
+
+  {
+    projects.length > 0 && (
+      <Section label={t('home.projects')} content="list">
+        <EntryList entries={projects.map((p) => ({ title: p.name, description: p.description[locale], href: p.href, external: true }))} />
+      </Section>
+    )
+  }
 </SiteLayout>
 
 <style>
-  h2 {
-    margin-bottom: var(--space-6);
-    font-weight: 500;
-  }
-
-  p {
+  .all {
+    margin-top: var(--space-4);
     color: var(--color-text-muted);
   }
 
-  p + p {
-    margin-top: var(--space-4);
+  @media (max-width: 639px) {
+    .all {
+      margin-top: var(--space-5);
+    }
   }
 </style>

@@ -1,0 +1,48 @@
+---
+interface Props {
+  label: string;
+  /** Lists sit 16px under the label, running text 24px (both 20px on phones). */
+  content?: 'list' | 'text';
+}
+
+const { label, content = 'text' } = Astro.props;
+---
+
+<section class:list={['section', content]}>
+  <h2>{label}</h2>
+  <slot />
+</section>
+
+<style>
+  .section + .section {
+    margin-top: var(--section-gap);
+  }
+
+  /* Labels are the same size as body text, weight 500: hierarchy by weight, not size. */
+  h2 {
+    font-weight: 500;
+    line-height: var(--leading-tight);
+  }
+
+  .list h2 {
+    margin-bottom: var(--list-label-gap);
+  }
+
+  .text h2 {
+    margin-bottom: var(--space-6);
+  }
+
+  @media (max-width: 639px) {
+    .text h2 {
+      margin-bottom: var(--space-5);
+    }
+  }
+
+  .text :global(p) {
+    color: var(--color-text-muted);
+  }
+
+  .text :global(p + p) {
+    margin-top: var(--space-4);
+  }
+</style>
