@@ -13,6 +13,26 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Reserve the scrollbar's space so short and long pages line up. */
+  scrollbar-gutter: stable;
+}
+
+/*
+ * Page navigations crossfade instead of flashing, while the header (named
+ * site-header) holds its place. Chrome and Safari only; elsewhere pages simply load.
+ * Skipped entirely when the reader prefers reduced motion.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: var(--duration-base);
+    animation-timing-function: ease;
+  }
 }
 
 /* Every element with its own `lang` picks up that language's font stack. */

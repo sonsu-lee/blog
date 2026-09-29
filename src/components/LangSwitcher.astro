@@ -1,0 +1,85 @@
+---
+import { localeNames, locales, type Locale } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  /** Where each language goes: the translated page if there is one, otherwise that locale's home. */
+  alternates: Record<Locale, string>;
+}
+
+const { locale, alternates } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<nav aria-label={t('lang.label')}>
+  <ul>
+    {
+      locales.map((l) => (
+        <li lang={l}>
+          {l === locale ? (
+            <span aria-current="page">{localeNames[l]}</span>
+          ) : (
+            <a href={alternates[l]} hreflang={l}>
+              {localeNames[l]}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    /* Each name is set in its own language, so it takes that language's small size. */
+    font-size: var(--size-small);
+    line-height: inherit;
+    white-space: nowrap;
+  }
+
+  /*
+   * Pin each name's font regardless of the page's language, so the switcher is
+   * pixel-identical everywhere. (Inter only loads on English pages; Pretendard's
+   * Latin is drawn from Inter, so "English" looks the same either way.)
+   */
+  li:lang(ko),
+  li:lang(en) {
+    font-family: var(--font-pretendard), system-ui, sans-serif;
+  }
+
+  li:lang(ja) {
+    font-family: var(--font-pretendard-jp), system-ui, sans-serif;
+  }
+
+  li + li::before {
+    content: '·';
+    padding-inline: var(--space-2);
+    color: var(--color-text-subtle);
+  }
+
+  [aria-current='page'] {
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-position: from-font;
+    text-decoration-color: var(--color-link-underline);
+  }
+
+  a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      color: var(--color-text-default);
+    }
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Header from '../components/Header.astro';
+import type { Locale } from '../i18n/config';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description?: string;
+  alternates: Record<Locale, string>;
+}
+
+const { locale, title, description, alternates } = Astro.props;
+---
+
+<BaseLayout locale={locale} title={title} description={description} alternates={alternates}>
+  <div class="page">
+    <Header locale={locale} alternates={alternates} />
+    <main>
+      <slot />
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  /* A 692px column with 24px gutters: text runs at 644px, and list rows can bleed 12px into the gutter. */
+  .page {
+    max-width: var(--layout-column);
+    margin-inline: auto;
+    padding: var(--page-pad-top) var(--layout-gutter) var(--page-pad-bottom);
+  }
+</style>

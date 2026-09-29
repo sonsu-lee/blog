@@ -2,6 +2,12 @@
 import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
+  i18n: {
+    defaultLocale: 'ko',
+    locales: ['ko', 'ja', 'en'],
+    // Every locale gets a prefix (/ko/, /ja/, /en/); src/pages/index.astro picks one for visitors to /.
+    routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
+  },
   fonts: [
     // Latin text on /en. Korean and Japanese pages set Latin in Pretendard, which is built on Inter.
     // Pretendard itself is imported as a stylesheet in BaseLayout (see the note there).

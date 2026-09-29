@@ -1,0 +1,36 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { Locale } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+import { alternatesFor, localeStaticPaths } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = Astro.params.locale as Locale;
+const t = useTranslations(locale);
+---
+
+<SiteLayout locale={locale} title="Sonsu Lee" description={t('home.now.body')} alternates={alternatesFor()}>
+  <section>
+    <h2>{t('home.now')}</h2>
+    <p>{t('home.now.body')}</p>
+    <p>{t('home.now.blog')}</p>
+  </section>
+</SiteLayout>
+
+<style>
+  h2 {
+    margin-bottom: var(--space-6);
+    font-weight: 500;
+  }
+
+  p {
+    color: var(--color-text-muted);
+  }
+
+  p + p {
+    margin-top: var(--space-4);
+  }
+</style>
