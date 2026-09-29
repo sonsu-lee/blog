@@ -18,6 +18,11 @@ const { label, content = 'text' } = Astro.props;
     margin-top: var(--section-gap);
   }
 
+  /* A list's last row carries 12px of hover padding below its text; take it back (on phones too, as emilkowal.ski does). */
+  .list:has(> :global(ul:last-child)) {
+    margin-bottom: calc(var(--space-3) * -1);
+  }
+
   /* Labels are the same size as body text, weight 500: hierarchy by weight, not size. */
   h2 {
     font-weight: 500;

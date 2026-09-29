@@ -86,9 +86,9 @@
   --layout-content: 644px;
   --layout-gutter: 24px;
 
-  /* Rhythm */
+  /* Rhythm. The header sits 116px down on every screen size, as on emilkowal.ski. */
   --page-pad-top: 116px;
-  --page-pad-bottom: 128px;
+  --page-pad-bottom: 64px;
   --section-gap: 128px;
   --list-gap: 16px;
   --list-label-gap: 16px;
@@ -148,8 +148,7 @@
 
 @media (max-width: 639px) {
   :root {
-    --page-pad-top: 48px;
-    --page-pad-bottom: 64px;
+    --page-pad-bottom: 48px;
     --section-gap: 64px;
     --list-gap: 28px;
     --list-label-gap: 20px;
