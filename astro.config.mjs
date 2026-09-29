@@ -1,9 +1,28 @@
 // @ts-check
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
+import { defaultLocale, intlLocales, locales } from './src/i18n/config';
+
+/**
+ * Absolute URLs (RSS, sitemap, hreflang) need the site's origin. Set SITE_URL once a
+ * domain is connected; until then Vercel builds use the project's production domain,
+ * and local builds use the dev server.
+ */
+const site =
+  process.env.SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:4321');
 
 export default defineConfig({
-  integrations: [mdx()],
+  site,
+  integrations: [
+    mdx(),
+    sitemap({
+      i18n: { defaultLocale, locales: intlLocales },
+      // The root page only redirects to a locale.
+      filter: (page) => new URL(page).pathname !== '/',
+    }),
+  ],
   markdown: {
     shikiConfig: {
       // Both themes are emitted as --shiki-light / --shiki-dark; prose.css picks one per color scheme.
@@ -12,8 +31,8 @@ export default defineConfig({
     },
   },
   i18n: {
-    defaultLocale: 'ko',
-    locales: ['ko', 'ja', 'en'],
+    defaultLocale,
+    locales: [...locales],
     // Every locale gets a prefix (/ko/, /ja/, /en/); src/pages/index.astro picks one for visitors to /.
     routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
   },

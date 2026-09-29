@@ -6,6 +6,11 @@ export function localePath(locale: Locale, path = ''): string {
   return getRelativeLocaleUrl(locale, path);
 }
 
+/** A file inside a locale, without the trailing slash pages get: localeFile('ja', 'rss.xml') → /ja/rss.xml */
+export function localeFile(locale: Locale, file: string): string {
+  return `${localePath(locale)}${file}`;
+}
+
 /** The same path in every locale, for hreflang links and the language switcher. */
 export function alternatesFor(path = ''): Record<Locale, string> {
   return Object.fromEntries(locales.map((l) => [l, localePath(l, path)])) as Record<Locale, string>;

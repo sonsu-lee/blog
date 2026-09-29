@@ -9,6 +9,7 @@ import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css
 import '../styles/tokens.css';
 import '../styles/global.css';
 import { locales, type Locale } from '../i18n/config';
+import { localeFile } from '../i18n/utils';
 
 interface Props {
   locale: Locale;
@@ -37,6 +38,7 @@ const absolute = (path: string) => (Astro.site ? new URL(path, Astro.site).href 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     {Object.entries(alternates).map(([l, href]) => <link rel="alternate" hreflang={l} href={absolute(href)} />)}
+    <link rel="alternate" type="application/rss+xml" title={`Sonsu Lee (${locale})`} href={absolute(localeFile(locale, 'rss.xml'))} />
 
     {/* Inter only on English pages; elsewhere Pretendard sets the Latin. */}
     {locale === 'en' && <Font cssVariable="--font-inter" preload={[{ subset: 'latin' }]} />}

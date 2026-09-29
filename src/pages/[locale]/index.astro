@@ -6,7 +6,7 @@ import Section from '../../components/Section.astro';
 import { projects } from '../../data/projects';
 import type { Locale } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
-import { alternatesFor, localePath, localeStaticPaths } from '../../i18n/utils';
+import { alternatesFor, localeFile, localePath, localeStaticPaths } from '../../i18n/utils';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { getPosts, postPath } from '../../lib/posts';
 
@@ -47,6 +47,12 @@ const posts = await getPosts(locale);
       </Section>
     )
   }
+
+  <Section label={t('home.subscribe')}>
+    <p>
+      <LinkedText text={t('home.subscribe.body')} token="rss" href={localeFile(locale, 'rss.xml')} label="RSS" />
+    </p>
+  </Section>
 
   <Section label={t('home.more')}>
     <p>
