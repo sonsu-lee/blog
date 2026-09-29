@@ -1,0 +1,25 @@
+---
+import { linkLabel, visibleLinks } from '../data/profile';
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+{
+  visibleLinks.length > 0 && (
+    <p class="links">
+      {visibleLinks.map((link, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true"> · </span>}
+          <a href={link.href} {...(!link.href.startsWith('mailto:') && { target: '_blank', rel: 'noopener me' })}>
+            {linkLabel(link, locale)}
+          </a>
+        </>
+      ))}
+    </p>
+  )
+}

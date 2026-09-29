@@ -1,0 +1,15 @@
+---
+interface Props {
+  /** A UI string containing one `{token}` placeholder, e.g. "More about me on the {about} page." */
+  text: string;
+  token: string;
+  href: string;
+  label: string;
+  external?: boolean;
+}
+
+const { text, token, href, label, external = false } = Astro.props;
+const [before, after = ''] = text.split(`{${token}}`);
+---
+
+{before}<a href={href} {...external && { target: '_blank', rel: 'noopener' }}>{label}</a>{after}

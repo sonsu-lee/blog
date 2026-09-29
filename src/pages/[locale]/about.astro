@@ -1,0 +1,71 @@
+---
+import EntryList from '../../components/EntryList.astro';
+import LinkedText from '../../components/LinkedText.astro';
+import ProfileLinks from '../../components/ProfileLinks.astro';
+import Section from '../../components/Section.astro';
+import { visibleLinks, work } from '../../data/profile';
+import type { Locale } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+import { alternatesFor, localeStaticPaths } from '../../i18n/utils';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = Astro.params.locale as Locale;
+const t = useTranslations(locale);
+const jobs = work.map((job) => ({
+  title: job.company[locale],
+  description: `${job.summary[locale]} · ${job.start} – ${job.end ?? t('about.present')}`,
+}));
+---
+
+<SiteLayout locale={locale} title={`${t('about.title')} — Sonsu Lee`} description={t('about.intro')} alternates={alternatesFor('about')}>
+  <div class="intro">
+    <h1>{t('about.title')}</h1>
+    <p>{t('about.intro')}</p>
+    <p>{t('about.languages')}</p>
+  </div>
+
+  {
+    jobs.length > 0 && (
+      <Section label={t('about.work')} content="list">
+        <EntryList entries={jobs} />
+      </Section>
+    )
+  }
+
+  <Section label={t('about.colophon')}>
+    <p>
+      <LinkedText text={t('about.colophon.body')} token="emil" href="https://emilkowal.ski" label="emilkowal.ski" external />
+    </p>
+  </Section>
+
+  {
+    visibleLinks.length > 0 && (
+      <Section label={t('about.links')}>
+        <ProfileLinks locale={locale} />
+      </Section>
+    )
+  }
+</SiteLayout>
+
+<style>
+  .intro {
+    margin-bottom: var(--section-gap);
+  }
+
+  h1 {
+    margin-bottom: var(--space-8);
+    font-weight: 600;
+  }
+
+  .intro p {
+    color: var(--color-text-prose);
+  }
+
+  .intro p + p {
+    margin-top: var(--prose-paragraph);
+  }
+</style>

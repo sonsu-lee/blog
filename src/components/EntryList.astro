@@ -2,7 +2,7 @@
 import Entry from './Entry.astro';
 
 interface Props {
-  entries: Array<{ title: string; description: string; href: string; external?: boolean }>;
+  entries: Array<{ title: string; description: string; href?: string; external?: boolean }>;
 }
 
 const { entries } = Astro.props;

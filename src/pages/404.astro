@@ -1,0 +1,87 @@
+---
+import EntryList from '../components/EntryList.astro';
+import Section from '../components/Section.astro';
+import SiteFrame from '../components/SiteFrame.astro';
+import { defaultLocale, locales } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+import { alternatesFor, localePath } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPosts, postPath } from '../lib/posts';
+
+// One static 404 answers every missing URL, so it carries all three languages and
+// shows the one in the URL's locale prefix (else the browser's language). Without
+// JavaScript it stays Korean.
+const RECENT = 3;
+const homes = alternatesFor();
+const variants = await Promise.all(
+  locales.map(async (locale) => ({
+    locale,
+    t: useTranslations(locale),
+    posts: (await getPosts(locale)).slice(0, RECENT),
+  })),
+);
+const titles = Object.fromEntries(variants.map(({ locale, t }) => [locale, `${t('notFound.title')} — Sonsu Lee`]));
+---
+
+<BaseLayout locale={defaultLocale} title={titles[defaultLocale]}>
+  <script is:inline slot="head" define:vars={{ locales, fallback: defaultLocale, titles }}>
+    const fromPath = location.pathname.split('/')[1];
+    const fromBrowser = (navigator.languages || [navigator.language])
+      .map((l) => l.slice(0, 2).toLowerCase())
+      .find((l) => locales.includes(l));
+    const locale = locales.includes(fromPath) ? fromPath : fromBrowser || fallback;
+    document.documentElement.lang = locale;
+    document.documentElement.dataset.locale = locale;
+    document.title = titles[locale];
+  </script>
+
+  {
+    variants.map(({ locale, t, posts }) => (
+      <SiteFrame locale={locale} alternates={homes} lang={locale} data-variant={locale}>
+        <div class="intro">
+          <h1>404</h1>
+          <p>{t('notFound.body')}</p>
+          <p>
+            <a href={localePath(locale)}>{t('notFound.home')}</a>
+          </p>
+        </div>
+        {posts.length > 0 && (
+          <Section label={t('notFound.recent')} content="list">
+            <EntryList entries={posts.map((p) => ({ title: p.data.title, description: p.data.description, href: postPath(p) }))} />
+          </Section>
+        )}
+      </SiteFrame>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  /* Show one language: the one the script picked, or Korean without JavaScript. */
+  [data-variant] {
+    display: none;
+  }
+
+  :global(html:not([data-locale])) [data-variant='ko'],
+  :global(html[data-locale='ko']) [data-variant='ko'],
+  :global(html[data-locale='ja']) [data-variant='ja'],
+  :global(html[data-locale='en']) [data-variant='en'] {
+    display: block;
+  }
+
+  .intro {
+    margin-bottom: var(--section-gap);
+  }
+
+  h1 {
+    margin-bottom: var(--space-4);
+    font-weight: 600;
+  }
+
+  .intro p {
+    color: var(--color-text-muted);
+  }
+
+  .intro p + p {
+    margin-top: var(--space-4);
+  }
+</style>

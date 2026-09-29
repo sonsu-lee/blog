@@ -2,17 +2,19 @@
 interface Props {
   title: string;
   description: string;
-  href: string;
+  /** Without a link the row is plain text (no hover). */
+  href?: string;
   external?: boolean;
 }
 
 const { title, description, href, external = false } = Astro.props;
+const Tag = href ? 'a' : 'div';
 ---
 
-<a class="entry" href={href} {...external && { target: '_blank', rel: 'noopener' }}>
+<Tag class="entry" href={href} {...href && external && { target: '_blank', rel: 'noopener' }}>
   <span class="title">{title}</span>
   <span class="description">{description}</span>
-</a>
+</Tag>
 
 <style>
   /*
@@ -46,7 +48,7 @@ const { title, description, href, external = false } = Astro.props;
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .entry:hover {
+    a.entry:hover {
       background: var(--color-bg-row-hover);
     }
   }

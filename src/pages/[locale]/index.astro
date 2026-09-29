@@ -1,5 +1,7 @@
 ---
 import EntryList from '../../components/EntryList.astro';
+import LinkedText from '../../components/LinkedText.astro';
+import ProfileLinks from '../../components/ProfileLinks.astro';
 import Section from '../../components/Section.astro';
 import { projects } from '../../data/projects';
 import type { Locale } from '../../i18n/config';
@@ -45,6 +47,13 @@ const posts = await getPosts(locale);
       </Section>
     )
   }
+
+  <Section label={t('home.more')}>
+    <p>
+      <LinkedText text={t('home.more.about')} token="about" href={localePath(locale, 'about')} label={t('about.title')} />
+    </p>
+    <ProfileLinks locale={locale} />
+  </Section>
 </SiteLayout>
 
 <style>
