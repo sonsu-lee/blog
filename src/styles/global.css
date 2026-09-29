@@ -24,24 +24,6 @@ html {
   transition: none !important;
 }
 
-/*
- * Page navigations crossfade instead of flashing, while the header (named
- * site-header) holds its place. Chrome and Safari only; elsewhere pages simply load.
- * Skipped entirely when the reader prefers reduced motion.
- */
-@media (prefers-reduced-motion: no-preference) {
-  @view-transition {
-    navigation: auto;
-  }
-
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation-duration: var(--duration-base);
-    animation-timing-function: ease;
-  }
-}
-
 body {
   margin: 0;
   background: var(--color-bg-default);
