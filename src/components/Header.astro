@@ -1,38 +1,18 @@
 ---
-import { name } from '../data/profile';
-import type { Locale } from '../i18n/config';
-import { useTranslations } from '../i18n/ui';
-import { localePath } from '../i18n/utils';
-import LangSwitcher from './LangSwitcher.astro';
+import { name, role } from '../data/profile';
 import ThemeToggle from './ThemeToggle.astro';
-
-interface Props {
-  locale: Locale;
-  alternates: Record<Locale, string>;
-}
-
-const { locale, alternates } = Astro.props;
-const t = useTranslations(locale);
 ---
 
 <header>
   <p class="identity">
-    <a href={localePath(locale)}>{name}</a>
-    <span>{t('site.role')}</span>
+    <a href="/">{name}</a>
+    <span>{role}</span>
   </p>
-  <div class="controls">
-    <LangSwitcher locale={locale} alternates={alternates} />
-    <ThemeToggle locale={locale} />
-  </div>
+  <ThemeToggle />
 </header>
 
 <style>
-  /*
-   * The header must sit in exactly the same place in every language, or switching
-   * languages makes the page jump. So its lines use a fixed 24px leading instead of
-   * each language's own, and on phones the switcher always takes its own line
-   * (the Japanese role would not fit beside it; the others would).
-   */
+  /* Named so page navigations crossfade the content while the header holds its place. */
   header {
     display: flex;
     justify-content: space-between;
@@ -43,28 +23,10 @@ const t = useTranslations(locale);
     view-transition-name: site-header;
   }
 
-  header > :global(*) {
-    flex: none;
-  }
-
-  @media (max-width: 639px) {
-    header {
-      flex-direction: column;
-      gap: var(--space-3);
-    }
-  }
-
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
   .identity {
     display: flex;
     flex-direction: column;
     font-weight: 500;
-    white-space: nowrap;
   }
 
   .identity a {

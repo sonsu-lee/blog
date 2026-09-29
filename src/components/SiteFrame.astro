@@ -1,18 +1,9 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
-import type { Locale } from '../i18n/config';
 import Header from './Header.astro';
-
-type Props = HTMLAttributes<'div'> & {
-  locale: Locale;
-  alternates: Record<Locale, string>;
-};
-
-const { locale, alternates, class: className, ...rest } = Astro.props;
 ---
 
-<div class:list={['page', className]} {...rest}>
-  <Header locale={locale} alternates={alternates} />
+<div class="page">
+  <Header />
   <main>
     <slot />
   </main>

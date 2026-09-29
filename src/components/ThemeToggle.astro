@@ -1,16 +1,4 @@
----
-import type { Locale } from '../i18n/config';
-import { useTranslations } from '../i18n/ui';
-
-interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
-const t = useTranslations(locale);
----
-
-<button type="button" class="theme-toggle" aria-label={t('theme.toggle')} data-theme-toggle>
+<button type="button" class="theme-toggle" aria-label="다크 모드 전환" data-theme-toggle>
   <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <circle cx="12" cy="12" r="9" />
     <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none" />

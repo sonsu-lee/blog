@@ -40,45 +40,6 @@ html {
     animation-duration: var(--duration-base);
     animation-timing-function: ease;
   }
-
-  /*
-   * Signature: switching a post to another language. The title (named post-title)
-   * is clipped to its own line; the old one slides up and out while the new one
-   * rises in from below. The exit runs 20% faster than the entrance.
-   * BaseLayout tags these navigations with the `translate` type.
-   */
-  html:active-view-transition-type(translate)::view-transition-group(post-title) {
-    overflow: clip;
-    animation-duration: var(--duration-signature);
-    animation-timing-function: var(--ease-out);
-  }
-
-  html:active-view-transition-type(translate)::view-transition-old(post-title),
-  html:active-view-transition-type(translate)::view-transition-new(post-title) {
-    /* Keep each title at its natural size instead of stretching to the morphing box. */
-    inline-size: auto;
-    mix-blend-mode: normal;
-  }
-
-  html:active-view-transition-type(translate)::view-transition-old(post-title) {
-    animation: title-out calc(var(--duration-signature) * 0.8) var(--ease-out) both;
-  }
-
-  html:active-view-transition-type(translate)::view-transition-new(post-title) {
-    animation: title-in var(--duration-signature) var(--ease-out) both;
-  }
-}
-
-@keyframes title-out {
-  to {
-    transform: translateY(-100%);
-  }
-}
-
-@keyframes title-in {
-  from {
-    transform: translateY(100%);
-  }
 }
 
 /* Every element with its own `lang` picks up that language's font stack. */

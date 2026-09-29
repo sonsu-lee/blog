@@ -1,0 +1,50 @@
+---
+import EntryList from '../../components/EntryList.astro';
+import Section from '../../components/Section.astro';
+import { pageTitle } from '../../data/profile';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getPosts, groupByYear, postPath } from '../../lib/posts';
+
+const posts = await getPosts();
+const summary = posts.length > 0 ? `쓴 글 ${posts.length}편.` : '아직 쓴 글이 없습니다.';
+---
+
+<SiteLayout title={pageTitle('글')} description={summary}>
+  <div class="intro">
+    <h1>글</h1>
+    <p>{summary}</p>
+  </div>
+
+  {
+    groupByYear(posts).map(([year, items]) => (
+      <Section label={String(year)} content="list">
+        <EntryList entries={items.map((p) => ({ title: p.data.title, description: p.data.description, href: postPath(p) }))} />
+      </Section>
+    ))
+  }
+</SiteLayout>
+
+<style>
+  .intro {
+    margin-bottom: var(--space-24);
+  }
+
+  .intro p {
+    color: var(--color-text-muted);
+  }
+
+  /* Years sit closer together than home sections: they are one list, split by time. */
+  .intro ~ :global(.section + .section) {
+    margin-top: var(--space-16);
+  }
+
+  @media (max-width: 639px) {
+    .intro {
+      margin-bottom: var(--space-16);
+    }
+
+    .intro ~ :global(.section + .section) {
+      margin-top: var(--space-12);
+    }
+  }
+</style>

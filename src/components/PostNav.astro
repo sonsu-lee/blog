@@ -1,16 +1,12 @@
 ---
-import type { Locale } from '../i18n/config';
-import { useTranslations } from '../i18n/ui';
 import { postPath, type Post } from '../lib/posts';
 
 interface Props {
-  locale: Locale;
   older?: Post;
   newer?: Post;
 }
 
-const { locale, older, newer } = Astro.props;
-const t = useTranslations(locale);
+const { older, newer } = Astro.props;
 ---
 
 {
@@ -18,7 +14,7 @@ const t = useTranslations(locale);
     <nav>
       {older ? (
         <a href={postPath(older)} rel="prev">
-          <span class="label">{t('post.older')}</span>
+          <span class="label">이전 글</span>
           <span class="title">{older.data.title}</span>
         </a>
       ) : (
@@ -26,7 +22,7 @@ const t = useTranslations(locale);
       )}
       {newer && (
         <a href={postPath(newer)} rel="next" class="newer">
-          <span class="label">{t('post.newer')}</span>
+          <span class="label">다음 글</span>
           <span class="title">{newer.data.title}</span>
         </a>
       )}

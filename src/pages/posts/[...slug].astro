@@ -1,0 +1,56 @@
+---
+import { render } from 'astro:content';
+import PostNav from '../../components/PostNav.astro';
+import Prose from '../../components/Prose.astro';
+import Button from '../../components/mdx/Button.astro';
+import Demo from '../../components/mdx/Demo.astro';
+import Heading from '../../components/mdx/Heading.astro';
+import Quote from '../../components/mdx/Quote.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { ogImagePath } from '../../lib/og';
+import { formatDate, getAdjacent, getPosts, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { older, newer } = await getAdjacent(post);
+const { Content } = await render(post);
+---
+
+<SiteLayout title={post.data.title} description={post.data.description} image={ogImagePath(post.id)} published={post.data.date}>
+  <article>
+    <header>
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
+      </p>
+    </header>
+
+    <Prose>
+      <Content components={{ h2: Heading, Demo, Button, Quote }} />
+    </Prose>
+  </article>
+
+  <PostNav older={older} newer={newer} />
+</SiteLayout>
+
+<style>
+  header {
+    margin-bottom: var(--space-8);
+  }
+
+  h1 {
+    font-weight: 600;
+  }
+
+  .meta {
+    color: var(--color-text-muted);
+  }
+</style>

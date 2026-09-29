@@ -1,0 +1,39 @@
+---
+import ProfileLinks from '../components/ProfileLinks.astro';
+import Section from '../components/Section.astro';
+import { name, pageTitle, visibleLinks } from '../data/profile';
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+// Like emilkowal.ski: no work history here; the home page's "지금" names the current job.
+const intro = `안녕하세요, ${name}입니다. 웹 인터페이스를 만들고, 그 과정에서 배운 것을 씁니다.`;
+---
+
+<SiteLayout title={pageTitle('소개')} description={intro}>
+  <div class="intro">
+    <h1>소개</h1>
+    <p>{intro}</p>
+  </div>
+
+  {
+    visibleLinks.length > 0 && (
+      <Section label="더 보기">
+        <ProfileLinks />
+      </Section>
+    )
+  }
+</SiteLayout>
+
+<style>
+  .intro {
+    margin-bottom: var(--section-gap);
+  }
+
+  h1 {
+    margin-bottom: var(--space-8);
+    font-weight: 600;
+  }
+
+  .intro p {
+    color: var(--color-text-prose);
+  }
+</style>

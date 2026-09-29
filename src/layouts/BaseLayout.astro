@@ -9,18 +9,13 @@ import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css
 import '../styles/tokens.css';
 import '../styles/global.css';
 import { name } from '../data/profile';
-import { intlLocales, locales, type Locale } from '../i18n/config';
-import { localeFile } from '../i18n/utils';
 import { OG_HEIGHT, OG_WIDTH, ogImagePath } from '../lib/og';
 import { THEME_COLORS, THEME_STORAGE_KEY } from '../lib/theme';
 
 interface Props {
-  locale: Locale;
   title: string;
   description?: string;
-  /** This page in other languages, for hreflang. Only languages that have it. */
-  alternates?: Partial<Record<Locale, string>>;
-  /** Share image path; defaults to the locale's image. */
+  /** Share image path; defaults to the site's image. */
   image?: string;
   /** Set on posts so shares show them as articles. */
   published?: Date;
@@ -28,14 +23,14 @@ interface Props {
   noindex?: boolean;
 }
 
-const { locale, title, description, alternates = {}, image = ogImagePath(locale), published, noindex = false } = Astro.props;
+const { title, description, image = ogImagePath(), published, noindex = false } = Astro.props;
 // Links in <head> must be absolute; `site` comes from astro.config.mjs.
 const absolute = (path: string) => new URL(path, Astro.site).href;
 const canonical = absolute(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -59,8 +54,7 @@ const canonical = absolute(Astro.url.pathname);
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    {Object.entries(alternates).map(([l, href]) => <link rel="alternate" hreflang={l} href={absolute(href)} />)}
-    <link rel="alternate" type="application/rss+xml" title={`${name} (${locale})`} href={absolute(localeFile(locale, 'rss.xml'))} />
+    <link rel="alternate" type="application/rss+xml" title={name} href={absolute('/rss.xml')} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
     <meta property="og:site_name" content={name} />
@@ -68,32 +62,14 @@ const canonical = absolute(Astro.url.pathname);
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     {!noindex && <meta property="og:url" content={canonical} />}
-    <meta property="og:locale" content={intlLocales[locale].replace('-', '_')} />
+    <meta property="og:locale" content="ko_KR" />
     <meta property="og:image" content={absolute(image)} />
     <meta property="og:image:width" content={String(OG_WIDTH)} />
     <meta property="og:image:height" content={String(OG_HEIGHT)} />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
 
-    {/* Inter only on English pages; elsewhere Pretendard sets the Latin. */}
-    {locale === 'en' && <Font cssVariable="--font-inter" preload={[{ subset: 'latin' }]} />}
     <Font cssVariable="--font-jetbrains-mono" />
-    {locale === 'en' && <Font cssVariable="--font-source-serif" />}
-
-    <script is:inline define:vars={{ locales }}>
-      // Tag navigations between the same page in two languages, so the post title
-      // can play its language-switch transition (see global.css). Browsers without
-      // the Navigation API or view transitions just navigate normally.
-      const localePrefix = new RegExp(`^/(${locales.join('|')})(?=/)`);
-      const pathWithoutLocale = (url) => new URL(url).pathname.replace(localePrefix, '');
-
-      addEventListener('pagereveal', (event) => {
-        const from = window.navigation?.activation?.from?.url;
-        const to = window.navigation?.activation?.entry?.url;
-        if (!event.viewTransition || !from || !to || from === to) return;
-        if (pathWithoutLocale(from) === pathWithoutLocale(to)) event.viewTransition.types.add('translate');
-      });
-    </script>
     <slot name="head" />
   </head>
   <body>

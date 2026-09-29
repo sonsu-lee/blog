@@ -2,10 +2,9 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
-import { defaultLocale, intlLocales, locales } from './src/i18n/config';
 
 /**
- * Absolute URLs (RSS, sitemap, hreflang) need the site's origin. Set SITE_URL once a
+ * Absolute URLs (RSS, sitemap, share images) need the site's origin. Set SITE_URL once a
  * domain is connected; until then Vercel builds use the project's production domain,
  * and local builds use the dev server.
  */
@@ -15,26 +14,13 @@ const site =
 
 export default defineConfig({
   site,
-  integrations: [
-    mdx(),
-    sitemap({
-      i18n: { defaultLocale, locales: intlLocales },
-      // The root page only redirects to a locale.
-      filter: (page) => new URL(page).pathname !== '/',
-    }),
-  ],
+  integrations: [mdx(), sitemap()],
   markdown: {
     shikiConfig: {
-      // Both themes are emitted as --shiki-light / --shiki-dark; prose.css picks one per color scheme.
+      // Both themes are emitted as --shiki-light / --shiki-dark; Prose picks one with light-dark().
       themes: { light: 'github-light', dark: 'github-dark' },
       defaultColor: false,
     },
-  },
-  i18n: {
-    defaultLocale,
-    locales: [...locales],
-    // Every locale gets a prefix (/ko/, /ja/, /en/); src/pages/index.astro picks one for visitors to /.
-    routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
   },
   fonts: [
     // Latin text on /en. Korean and Japanese pages set Latin in Pretendard, which is built on Inter.

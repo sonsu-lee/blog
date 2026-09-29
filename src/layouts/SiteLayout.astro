@@ -1,25 +1,19 @@
 ---
 import SiteFrame from '../components/SiteFrame.astro';
-import type { Locale } from '../i18n/config';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
-  locale: Locale;
   title: string;
   description?: string;
-  /** Where the language switcher sends each language. */
-  alternates: Record<Locale, string>;
-  /** Versions of this page that really exist, for hreflang. Defaults to `alternates`. */
-  translations?: Partial<Record<Locale, string>>;
   image?: string;
   published?: Date;
 }
 
-const { locale, title, description, alternates, translations = alternates, image, published } = Astro.props;
+const { title, description, image, published } = Astro.props;
 ---
 
-<BaseLayout locale={locale} title={title} description={description} alternates={translations} image={image} published={published}>
-  <SiteFrame locale={locale} alternates={alternates}>
+<BaseLayout title={title} description={description} image={image} published={published}>
+  <SiteFrame>
     <slot />
   </SiteFrame>
 </BaseLayout>
