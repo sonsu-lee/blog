@@ -1,9 +1,7 @@
 ---
-import EntryList from '../../components/EntryList.astro';
-import LinkedText from '../../components/LinkedText.astro';
 import ProfileLinks from '../../components/ProfileLinks.astro';
 import Section from '../../components/Section.astro';
-import { name, pageTitle, visibleLinks, work } from '../../data/profile';
+import { name, pageTitle, visibleLinks } from '../../data/profile';
 import type { Locale } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 import { alternatesFor, localeStaticPaths } from '../../i18n/utils';
@@ -13,12 +11,9 @@ export function getStaticPaths() {
   return localeStaticPaths();
 }
 
+// Like emilkowal.ski: no work history here; the home page's "Now" names the current job.
 const locale = Astro.params.locale as Locale;
 const t = useTranslations(locale);
-const jobs = work.map((job) => ({
-  title: job.company[locale],
-  description: `${job.summary[locale]} · ${job.start} – ${job.end ?? t('about.present')}`,
-}));
 ---
 
 <SiteLayout locale={locale} title={pageTitle(t('about.title'))} description={t('about.intro', { name })} alternates={alternatesFor('about')}>
@@ -29,22 +24,8 @@ const jobs = work.map((job) => ({
   </div>
 
   {
-    jobs.length > 0 && (
-      <Section label={t('about.work')} content="list">
-        <EntryList entries={jobs} />
-      </Section>
-    )
-  }
-
-  <Section label={t('about.colophon')}>
-    <p>
-      <LinkedText text={t('about.colophon.body')} token="emil" href="https://emilkowal.ski" label="emilkowal.ski" external />
-    </p>
-  </Section>
-
-  {
     visibleLinks.length > 0 && (
-      <Section label={t('about.links')}>
+      <Section label={t('home.more')}>
         <ProfileLinks locale={locale} />
       </Section>
     )
