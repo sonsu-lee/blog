@@ -23,17 +23,7 @@ export default defineConfig({
     },
   },
   fonts: [
-    // Latin text on /en. Korean and Japanese pages set Latin in Pretendard, which is built on Inter.
-    // Pretendard itself is imported as a stylesheet in BaseLayout (see the note there).
-    {
-      name: 'Inter',
-      cssVariable: '--font-inter',
-      provider: fontProviders.fontsource(),
-      weights: ['400 600'],
-      styles: ['normal'],
-      subsets: ['latin', 'latin-ext'],
-      fallbacks: ['sans-serif'],
-    },
+    // Code only. Body text is Pretendard, imported as a stylesheet in BaseLayout (see the note there).
     {
       name: 'JetBrains Mono',
       cssVariable: '--font-jetbrains-mono',
@@ -42,16 +32,6 @@ export default defineConfig({
       styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['monospace'],
-    },
-    // <em> in English: serif italic, standing in for Emil's Tiempos.
-    {
-      name: 'Source Serif 4',
-      cssVariable: '--font-source-serif',
-      provider: fontProviders.fontsource(),
-      weights: [400],
-      styles: ['italic'],
-      subsets: ['latin', 'latin-ext'],
-      fallbacks: ['serif'],
     },
   ],
 });

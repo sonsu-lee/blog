@@ -16,13 +16,9 @@
     margin-block: 0 var(--prose-paragraph);
   }
 
-  /* No lone word (or lone kana) on a paragraph's last line; short Japanese lines break by phrase. */
+  /* No lone word on a paragraph's last line. */
   .prose :global(:where(p, li)) {
     text-wrap: pretty;
-  }
-
-  .prose :global(li:lang(ja)) {
-    word-break: auto-phrase;
   }
 
   .prose :global(> :last-child) {

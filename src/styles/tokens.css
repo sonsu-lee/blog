@@ -111,9 +111,23 @@
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Families. Inter, JetBrains Mono and Source Serif come from the Fonts API as --font-* variables. */
-  --font-pretendard: "Pretendard Variable";
-  --font-pretendard-jp: "Pretendard JP Variable";
+  /*
+   * Type. One size throughout; hierarchy comes from weight and color.
+   * The body runs at 17px because Hangul reads small next to Latin at the same size.
+   */
+  --size-body: 17px;
+  --leading-body: 1.75;
+  --leading-tight: 1.5;
+  --size-small: 15px;
+  --size-caption: 13px;
+  --leading-caption: 1.5;
+  --size-footnote: 15px;
+  --leading-footnote: 1.65;
+  --size-quote: 26px;
+  --leading-quote: 1.45;
+
+  /* Families. Pretendard is imported as a stylesheet in BaseLayout; JetBrains Mono comes from the Fonts API. */
+  --font-body: "Pretendard Variable", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono, ui-monospace), ui-monospace, monospace;
 }
 
@@ -134,58 +148,6 @@
     --list-gap: 28px;
     --list-label-gap: 20px;
     --prose-h2-top: 48px;
+    --size-quote: 21px;
   }
-}
-
-
-/*
- * Type per language. One size per locale; hierarchy comes from weight and color.
- * Korean runs 1px larger because Hangul reads small next to Latin at the same size.
- */
-:lang(en) {
-  --font-body: var(--font-inter, var(--font-pretendard)), system-ui, sans-serif;
-  --size-body: 16px;
-  --leading-body: 1.65;
-  --leading-tight: 1.5;
-  --size-small: 14px;
-  --size-caption: 12px;
-  --leading-caption: 1.333;
-  --size-footnote: 14px;
-  --leading-footnote: 1.64;
-  --size-quote: 30px;
-  --leading-quote: 1.33;
-}
-
-:lang(ko) {
-  --font-body: var(--font-pretendard), "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
-  --size-body: 17px;
-  --leading-body: 1.75;
-  --leading-tight: 1.5;
-  --size-small: 15px;
-  --size-caption: 13px;
-  --leading-caption: 1.5;
-  --size-footnote: 15px;
-  --leading-footnote: 1.65;
-  --size-quote: 26px;
-  --leading-quote: 1.45;
-}
-
-:lang(ja) {
-  --font-body: var(--font-pretendard-jp), var(--font-pretendard), "Hiragino Sans", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
-  --size-body: 16px;
-  --leading-body: 1.85;
-  --leading-tight: 1.6;
-  --size-small: 14px;
-  --size-caption: 12px;
-  --leading-caption: 1.66;
-  --size-footnote: 14px;
-  --leading-footnote: 1.75;
-  --size-quote: 24px;
-  --leading-quote: 1.5;
-}
-
-@media (max-width: 639px) {
-  :lang(en) { --size-quote: 24px; }
-  :lang(ko) { --size-quote: 21px; }
-  :lang(ja) { --size-quote: 20px; }
 }

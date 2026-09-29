@@ -24,19 +24,14 @@ const { author, source } = Astro.props;
     margin-block: var(--space-16);
   }
 
-  /* A serif pull quote with the opening mark hung into the margin. */
+  /* A pull quote with the opening mark hung into the margin. Size and weight set it apart; no serif. */
   blockquote {
     position: relative;
     color: var(--color-text-default);
-    font-family: var(--font-source-serif, serif);
     font-size: var(--size-quote);
+    font-weight: 500;
     line-height: var(--leading-quote);
     text-wrap: balance;
-  }
-
-  blockquote:is(:lang(ko), :lang(ja)) {
-    font-family: inherit;
-    font-weight: 500;
   }
 
   blockquote::before {

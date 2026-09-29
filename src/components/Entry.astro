@@ -33,14 +33,10 @@ const Tag = href ? 'a' : 'div';
     text-decoration: none;
   }
 
-  /* Short lines wrap badly: avoid a lone word on the last line, and break Japanese by phrase. */
+  /* Short lines wrap badly: avoid a lone word on the last line. */
   .title,
   .description {
     text-wrap: pretty;
-  }
-
-  .entry:lang(ja) :is(.title, .description) {
-    word-break: auto-phrase;
   }
 
   .description {

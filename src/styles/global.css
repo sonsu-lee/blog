@@ -42,52 +42,22 @@ html {
   }
 }
 
-/* Every element with its own `lang` picks up that language's font stack. */
-html,
-[lang] {
-  font-family: var(--font-body);
-}
-
 body {
   margin: 0;
   background: var(--color-bg-default);
   color: var(--color-text-default);
+  font-family: var(--font-body);
   font-size: var(--size-body);
   line-height: var(--leading-body);
   font-optical-sizing: auto;
   font-variant-ligatures: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/*
- * Inter features used on emilkowal.ski: cv01 (alternate one) and ss03 (round quotes and commas).
- * Pretendard and JetBrains Mono map these tags to different glyphs, so they are reset below.
- */
-:lang(en) {
-  font-feature-settings: "cv01", "ss03";
-}
-
-:lang(ko),
-:lang(ja),
-code,
-kbd,
-pre {
-  font-feature-settings: normal;
-}
-
-/* Line breaking. Korean breaks between words; Japanese has no spaces, so it must not use keep-all. */
-:lang(ko) {
+  /* Korean breaks between words, not between syllables; a word too long for the line still wraps. */
   word-break: keep-all;
   overflow-wrap: break-word;
+  /* Pretendard has no italic, and a slanted Hangul fake reads worse than none. */
   font-synthesis-style: none;
-}
-
-:lang(ja) {
-  word-break: normal;
-  line-break: strict;
-  overflow-wrap: break-word;
-  font-synthesis-style: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -107,10 +77,6 @@ h4 {
   font-weight: 550;
 }
 
-:is(h1, h2, h3, h4):lang(ja) {
-  word-break: auto-phrase;
-}
-
 p,
 figure,
 blockquote,
@@ -125,19 +91,8 @@ strong {
   font-weight: 600;
 }
 
-/* Emphasis: a serif italic in English; CJK has no true italic, so weight carries it instead. */
+/* Emphasis: Hangul has no true italic, so weight carries it instead. */
 em {
-  font-style: italic;
-}
-
-/* Match the em's own language (not an ancestor's), so a Korean quote on an English page stays Korean. */
-em:lang(en) {
-  font-family: var(--font-source-serif), serif;
-  font-size: 1.1em;
-  line-height: 1;
-}
-
-em:is(:lang(ko), :lang(ja)) {
   font-style: normal;
   font-weight: 500;
 }

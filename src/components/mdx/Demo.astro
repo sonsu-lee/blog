@@ -43,10 +43,6 @@ const { caption, height = 256 } = Astro.props;
     text-wrap: balance;
   }
 
-  figcaption:lang(ja) {
-    word-break: auto-phrase;
-  }
-
   @media (max-width: 639px) {
     .frame {
       margin-inline: calc(var(--layout-gutter) * -1);

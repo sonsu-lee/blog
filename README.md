@@ -1,6 +1,6 @@
 # blog
 
-A personal blog in Korean, Japanese, and English, built with [Astro](https://astro.build).
+A personal blog in Korean, built with [Astro](https://astro.build).
 
 Design lives in Figma: [Blog — Design](https://www.figma.com/design/WS4wq2d6IMny4AzkMLEbLo).
 

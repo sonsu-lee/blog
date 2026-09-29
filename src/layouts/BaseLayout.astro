@@ -1,11 +1,9 @@
 ---
 import { Font } from 'astro:assets';
-// Pretendard ships one @font-face per unicode-range chunk (92 for Korean, 119 for Japanese).
-// Importing its own stylesheet bundles them into a cached external CSS file; the Fonts API
-// would inline all of them into every page. Browsers download only the chunks a page uses,
-// which is why both load everywhere: the language switcher shows 한국어 and 日本語.
+// Pretendard ships 92 @font-face rules, one per unicode-range chunk. Importing its own
+// stylesheet bundles them into a cached external CSS file, where the Fonts API would inline
+// all of them into every page. Browsers download only the chunks a page actually uses.
 import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
-import 'pretendard-jp/dist/web/variable/pretendardvariable-jp-dynamic-subset.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import { name } from '../data/profile';
