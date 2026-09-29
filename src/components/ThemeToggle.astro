@@ -1,0 +1,57 @@
+---
+import type { Locale } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<button type="button" class="theme-toggle" aria-label={t('theme.toggle')} data-theme-toggle>
+  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none" />
+  </svg>
+</button>
+
+<script>
+  import { applyTheme, currentTheme } from '../lib/theme';
+
+  // Flip between light and dark and remember the choice. Until the reader picks one,
+  // the page follows the system setting (tokens.css).
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
+    button.addEventListener('click', () => applyTheme(currentTheme() === 'dark' ? 'light' : 'dark'));
+  }
+</script>
+
+<style>
+  .theme-toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+  }
+
+  /* A 44px touch target around the 24px button. */
+  .theme-toggle::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover {
+      color: var(--color-text-default);
+    }
+  }
+</style>

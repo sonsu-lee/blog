@@ -105,14 +105,7 @@
 
   .prose :global(.astro-code),
   .prose :global(.astro-code span) {
-    color: var(--shiki-light);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .prose :global(.astro-code),
-    .prose :global(.astro-code span) {
-      color: var(--shiki-dark);
-    }
+    color: light-dark(var(--shiki-light), var(--shiki-dark));
   }
 
   @media (max-width: 639px) {

@@ -17,6 +17,13 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Theme changes snap: nothing animates its colors while the toggle flips (see lib/theme.ts). */
+:root[data-theme-switching] *,
+:root[data-theme-switching] *::before,
+:root[data-theme-switching] *::after {
+  transition: none !important;
+}
+
 /*
  * Page navigations crossfade instead of flashing, while the header (named
  * site-header) holds its place. Chrome and Safari only; elsewhere pages simply load.

@@ -4,6 +4,7 @@ import type { Locale } from '../i18n/config';
 import { useTranslations } from '../i18n/ui';
 import { localePath } from '../i18n/utils';
 import LangSwitcher from './LangSwitcher.astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   locale: Locale;
@@ -19,7 +20,10 @@ const t = useTranslations(locale);
     <a href={localePath(locale)}>{name}</a>
     <span>{t('site.role')}</span>
   </p>
-  <LangSwitcher locale={locale} alternates={alternates} />
+  <div class="controls">
+    <LangSwitcher locale={locale} alternates={alternates} />
+    <ThemeToggle locale={locale} />
+  </div>
 </header>
 
 <style>
@@ -48,6 +52,12 @@ const t = useTranslations(locale);
       flex-direction: column;
       gap: var(--space-3);
     }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
   }
 
   .identity {

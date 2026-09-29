@@ -12,6 +12,7 @@ import { name } from '../data/profile';
 import { intlLocales, locales, type Locale } from '../i18n/config';
 import { localeFile } from '../i18n/utils';
 import { OG_HEIGHT, OG_WIDTH, ogImagePath } from '../lib/og';
+import { THEME_COLORS, THEME_STORAGE_KEY } from '../lib/theme';
 
 interface Props {
   locale: Locale;
@@ -39,8 +40,20 @@ const canonical = absolute(Astro.url.pathname);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#fdfdfc" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content={THEME_COLORS.light} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={THEME_COLORS.dark} media="(prefers-color-scheme: dark)" />
+    <script is:inline define:vars={{ key: THEME_STORAGE_KEY, colors: THEME_COLORS }}>
+      // Apply a saved theme before the first paint, so the page never flashes the other one.
+      try {
+        const theme = localStorage.getItem(key);
+        if (theme === 'light' || theme === 'dark') {
+          document.documentElement.dataset.theme = theme;
+          for (const meta of document.querySelectorAll('meta[name="theme-color"]')) meta.content = colors[theme];
+        }
+      } catch {
+        // No storage: follow the system setting.
+      }
+    </script>
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}

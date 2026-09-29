@@ -5,6 +5,7 @@ export const ui = {
   ko: {
     'site.role': '소프트웨어 엔지니어',
     'lang.label': '언어',
+    'theme.toggle': '다크 모드 전환',
     'home.now': '지금',
     'home.now.body': 'AI model에서 생성형 AI 이미지 서비스를 만들고 있습니다. 화면이 어떻게 보이고, 느껴지고, 움직이는지 오래 고민하는 편입니다.',
     'home.now.blog': '이 블로그에는 한국어·일본어·영어로 만들며 배운 것들을 기록합니다.',
@@ -32,6 +33,7 @@ export const ui = {
   ja: {
     'site.role': 'ソフトウェアエンジニア',
     'lang.label': '言語',
+    'theme.toggle': 'ダークモード切り替え',
     'home.now': 'いま',
     'home.now.body': 'AI modelで生成AI画像サービスをつくっています。画面がどう見えて、どう感じられて、どう動くのかを長く考えるほうです。',
     'home.now.blog': 'このブログには、日本語・韓国語・英語でものをつくりながら学んだことを書いています。',
@@ -59,6 +61,7 @@ export const ui = {
   en: {
     'site.role': 'Software Engineer',
     'lang.label': 'Language',
+    'theme.toggle': 'Toggle dark mode',
     'home.now': 'Now',
     'home.now.body': 'I build generative AI image services at AI model. I spend a lot of time thinking about how a screen looks, feels, and moves.',
     'home.now.blog': 'This blog is where I write down what I learn while making things in English, Korean, and Japanese.',
